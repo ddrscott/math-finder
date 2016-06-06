@@ -25,15 +25,15 @@ input {
 }
 
 .match3 {
-  color: green;
+  color: orange;
 }
 
 .match4 {
-  color: blue;
+  color: green;
 }
 
 .match5 {
-  color: orange;
+  color: blue;
 }
 
 .puzzle {
