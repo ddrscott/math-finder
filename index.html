@@ -3,44 +3,30 @@
   <head>
     <meta charset="UTF-8">
     <title>Math Finder</title>
-    
-    
     <link rel="stylesheet" href="css/normalize.css">
-
-    
-        <link rel="stylesheet" href="css/style.css">
-
-    
-    
-    
+    <link rel="stylesheet" href="css/style.css">
   </head>
-
   <body>
-
     <h1>Math Finder</h1> Find addition or subtraction problems in the grid.
-<br/><small>(Refresh to get new puzzle)</small>
-<section>
-  <pre class="puzzle"></pre>
-</section>
-<section>
-  <label>Rows: <input type='text' name='rows' /></label>
-  <label>Columns: <input type='text' name='cols' /></label>
-  <label>Seed: <input type='text' name='seed' /></label>
-</section>
-<section>
-  <button class='resize'>Resize</button>
-  <button class='random'>New Seed</button>
-  <button class='solve'>Solve</button>
-</section>
-<section>
-  <small>Set seed to get the same puzzle.</small>
-</section>
+    <br/><small>(Refresh to get new puzzle)</small>
+    <section>
+      <pre class="puzzle"></pre>
+    </section>
+    <section>
+      <label>Rows: <input type='text' name='rows' /></label>
+      <label>Columns: <input type='text' name='cols' /></label>
+      <label>Seed: <input type='text' name='seed' /></label>
+    </section>
+    <section>
+      <button class='resize'>Resize</button>
+      <button class='random'>New Seed</button>
+      <button class='solve'>Solve</button>
+    </section>
+    <section>
+      <small>Set seed to get the same puzzle.</small>
+    </section>
     <script src='https://code.jquery.com/jquery-2.2.4.min.js'></script>
-
-        <script src="js/index.js"></script>
-
-    
-    
-    
+    <script src='js/browser.js'></script>
+    <script src="js/app.js" type="text/babel"></script>
   </body>
 </html>
