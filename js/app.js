@@ -137,7 +137,7 @@ var App = {
   }
 }
 App.init({
-  rows: 10,
+  rows: 15,
   cols: 15,
   max: 15
 });
