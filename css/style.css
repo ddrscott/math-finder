@@ -1,0 +1,59 @@
+body {
+  text-align: center;
+  padding: 5%;
+}
+
+section + section {
+  margin-top: 1em;
+}
+label {
+  white-space: nowrap;
+  margin: 0 .5em;
+}
+
+input {
+  max-width: 2em;
+  text-align: center;
+}
+
+[class^=match] {
+  font-weight: bold;
+}
+
+.match2 {
+  color: red;
+}
+
+.match3 {
+  color: green;
+}
+
+.match4 {
+  color: blue;
+}
+
+.match5 {
+  color: orange;
+}
+
+.puzzle {
+  border: 2px solid black;
+  display: inline-block;
+  margin: 2em auto 1em;
+}
+
+table {
+  border-collapse: collapse;
+}
+
+td {
+  padding: .5em;
+  border: 1px solid #ccc;
+}
+
+*,
+*:before,
+*:after {
+  -webkit-transition: all 0.3s ease;
+  transition: all 0.3s ease
+}
