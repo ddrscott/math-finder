@@ -1,14 +1,18 @@
-var Cell = function(row, col, max, seed) {
+var Random = {
+  seed: 0,
+
+  int(min, max) {
+    this.seed += 1;
+    var digits = Math.sin(this.seed) * 10000;
+    return parseInt(Math.abs(digits)) % max + min;
+  }
+}
+
+var Cell = function(row, col, max) {
   this.row = row;
   this.col = col;
   this.max = max;
-
-  this.psuedoRandomInt = function(max, inc) {
-    var digits = Math.sin(inc) * 1000 * max;
-    return parseInt(Math.abs(digits)) % max + 1;
-  };
-
-  this.num = this.psuedoRandomInt(max, col * row + col + row + seed);
+  this.num = Random.int(1, max);
 };
 
 var App = {
@@ -125,11 +129,14 @@ var App = {
   },
 
   generate(numRows, numCols) {
+    // reset the seed
+    Random.seed = parseInt(this.seed.val());
+
     var rows = [];
     for (var r = 0; r < numRows; r++) {
       var cols = [];
       for (var c = 0; c < numCols; c++) {
-        cols.push(new Cell(r, c, this.max, this.seed.val()));
+        cols.push(new Cell(r, c, this.max));
       }
       rows.push(cols);
     }
