@@ -16,27 +16,13 @@ input {
   text-align: center;
 }
 
-[class^=match] {
+.match {
   font-weight: bold;
-}
-
-.match2 {
-  color: red;
-}
-
-.match3 {
-  color: orange;
-}
-
-.match4 {
-  color: green;
-}
-
-.match5 {
-  color: blue;
+  color: rgba(100,100,255,1);
 }
 
 .puzzle {
+  font-size: 1.1em;
   border: 2px solid black;
   display: inline-block;
   margin: 2em auto 1em;
@@ -50,10 +36,14 @@ td {
   padding: .5em;
   border: 1px solid #ccc;
 }
+.oval {
+  position: absolute;
+  border: .15em solid rgba(100,100,255,.5);
+  border-radius: 1em;
+}
 
 *,
 *:before,
 *:after {
-  -webkit-transition: all 0.3s ease;
   transition: all 0.3s ease
 }

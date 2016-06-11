@@ -15,20 +15,25 @@
     <h1>Math Finder</h1> Find addition or subtraction problems in the grid.
     <br/><small>(Refresh to get new puzzle)</small>
     <section>
-      <pre class="puzzle"></pre>
+      <div class="solutions"></div>
+      <pre class="puzzle">
+      </pre>
     </section>
     <section>
       <label>Rows: <input type='text' name='rows' /></label>
       <label>Columns: <input type='text' name='cols' /></label>
-      <label>Seed: <input type='text' name='seed' /></label>
+      <label>Puzzle #<input type='text' name='seed' /></label>
     </section>
     <section>
-      <button class='resize'>Resize</button>
-      <button class='random'>New Seed</button>
-      <button class='solve'>Solve</button>
+      <button class='resize'>Generate/Reset</button>
+      <button class='next'>Next</button>
+      <button class='random'>Random</button>
     </section>
     <section>
-      <small>Set seed to get the same puzzle.</small>
+      <label><input type=checkbox name='show-solution'/> Show Solution</label><br/>
+    </section>
+    <section>
+      <a href="https://ddrscott.github.io/math-finder/" target="_blank">Printable Page Here</a>
     </section>
     <script src='https://code.jquery.com/jquery-2.2.4.min.js'></script>
     <script src='https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.34/browser.min.js'></script>
