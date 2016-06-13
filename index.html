@@ -11,8 +11,9 @@
     <![endif]-->  
   </head>
   <body>
-    <a class="github-fork-ribbon" href="https://github.com/ddrscott/math-finder" title="Fork me on GitHub">Fork me on GitHub</a>
-    <h1>Math Finder</h1> Find addition or subtraction problems in the grid.
+    <a class="github-fork-ribbon no-print" href="https://github.com/ddrscott/math-finder" title="Fork me on GitHub">Fork me on GitHub</a>
+    <h1>Math Finder</h1>
+    Print and all circle addition problems found in grid.<br/><br/><img src="example.png" width="88" height="38"/>
     <section>
       <div class="solutions"></div>
       <pre class="puzzle">
@@ -23,12 +24,12 @@
       <label>Columns: <input type='text' name='cols' /></label>
       <label>Puzzle #<input type='text' name='seed' /></label>
     </section>
-    <section>
+    <section class="no-print">
       <button class='resize'>Generate/Reset</button>
       <button class='next'>Next</button>
       <button class='random'>Random</button>
     </section>
-    <section>
+    <section class="no-print">
       <label><input type=checkbox name='show-solution'/> Show Solution</label><br/>
     </section>
     <script src='https://code.jquery.com/jquery-2.2.4.min.js'></script>

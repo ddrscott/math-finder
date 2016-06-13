@@ -3,6 +3,10 @@ body {
   padding: 5%;
 }
 
+section {
+  clear: both;
+}
+
 section + section {
   margin-top: 1em;
 }
@@ -43,6 +47,11 @@ td {
   transition: none;
 }
 
+@media print {
+  .no-print {
+    display: none;
+  }
+}
 *,
 *:before,
 *:after {
