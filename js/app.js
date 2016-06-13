@@ -34,6 +34,8 @@ var App = {
   puzzle: [],
 
   init(opts) {
+    var self = this;
+
     this.max = opts.max;
     this.rows.val(opts.rows);
     this.cols.val(opts.cols);
@@ -46,6 +48,20 @@ var App = {
 
     // always start with something
     this.handleRandom();
+
+		$(window).on('resize', function(e) {
+			clearTimeout(self.timedResize);
+			self.timedResize = setTimeout(function() {
+        self.handleResize();
+			}, 100);
+		});
+  },
+
+  handleResize() {
+    if (this.checkSolution.prop('checked')) {
+      this.solve();
+      this.renderSolutions();
+    }
   },
 
   handleCheckSolution(e) {
@@ -59,10 +75,7 @@ var App = {
   handleGenerate(e) {
     this.puzzle = this.generate(this.rows.val(), this.cols.val());
     this.update();
-    if (this.checkSolution.prop('checked')) {
-      this.solve();
-      this.renderSolutions();
-    }
+    this.handleResize();
   },
 
   handleNext(e) {
@@ -124,25 +137,12 @@ var App = {
       });
     }
 
-    $('.oval').each(function(i) {
-
-      var oval = $(this),
-        // element
-        e1 = $('#' + oval.data('from')),
+	  function alignOval(oval) {
+      // element
+      var e1 = $('#' + oval.data('from')),
         e2 = $('#' + oval.data('to')),
 
-        // widths
-        w1 = e1.outerWidth(),
-        w2 = e2.outerWidth(),
-
-        minDim = Math.min(e1.outerWidth(),
-                          e1.outerHeight(),
-      e2.outerWidth(),
-      e2.outerHeight()) * 0.6,
-
-      // offsets
-      o1 = e1.offset(),
-        o2 = e2.offset(),
+        minDim = 0.6 * Math.min(e1.outerWidth(), e1.outerHeight(), e2.outerWidth(), e2.outerHeight()),
 
         // centers
         c1 = center(e1),
@@ -151,7 +151,7 @@ var App = {
         // midpoint
         mid = midpoint(c2, c1),
 
-        // distance from center points
+        // distance between center points
         dx2 = Math.pow(c2.x - c1.x, 2),
         dy2 = Math.pow(c2.y - c1.y, 2),
         dist = Math.sqrt(dx2 + dy2);
@@ -170,6 +170,10 @@ var App = {
       var deg = Math.atan2(c2.y - c1.y, c2.x - c1.x) * 180 / Math.PI;
 
       rotate(oval, deg);
+    }
+
+    $('.oval').each(function(i) {
+      alignOval($(this));
     });
   },
 
