@@ -10,6 +10,7 @@ section {
 section + section {
   margin-top: 1em;
 }
+
 label {
   white-space: nowrap;
   margin: 0 .5em;
@@ -20,16 +21,9 @@ input {
   text-align: center;
 }
 
-.match {
-  font-weight: bold;
-  color: rgba(100,100,255,1);
-}
-
-.puzzle {
-  font-size: 1.1em;
-  border: 2px solid black;
-  display: inline-block;
-  margin: 2em auto 1em;
+h1,
+h1 img {
+  vertical-align: bottom;
 }
 
 table {
@@ -40,6 +34,20 @@ td {
   padding: .5em;
   border: 1px solid #ccc;
 }
+
+.match {
+  font-weight: bold;
+  color: rgba(100,100,255,1);
+  transition: none;
+}
+
+.puzzle {
+  font-size: 1.1em;
+  border: 2px solid black;
+  display: inline-block;
+  margin: 2em auto 1em;
+}
+
 .oval {
   position: absolute;
   border: .15em solid rgba(100,100,255,.5);
@@ -52,6 +60,7 @@ td {
     display: none;
   }
 }
+
 *,
 *:before,
 *:after {
