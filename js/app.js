@@ -4,21 +4,103 @@ var Random = {
   int(min, max) {
     this.seed = (this.seed * 9301 + 49297) % 233280;
     var rnd = this.seed / 233280;
-
     return parseInt(min + rnd * (max - min));
   }
 }
 
-var Cell = function(row, col, max) {
+var Cell = function(row, col, min, max) {
   var self = this;
 
   this.row = row;
   this.col = col;
+  this.min = min;
   this.max = max;
 
-  this.num = Random.int(1, max);
+  this.num = Random.int(min, max);
   this.id = function() {
     return 'cell-' + self.row + '-' + self.col;
+  };
+};
+
+var Puzzle = function(options) {
+  this.numRows = parseInt(options.rows || 3);
+  this.numCols = parseInt(options.cols || 3);
+  this.minNum  = parseInt(options.min  || 1);
+  this.maxNum  = parseInt(options.max  || 1);
+  this.seed    = parseInt(options.seed || 1);
+
+  generate(this);
+
+  function generate(puzzle) {
+    Random.seed = puzzle.seed;
+    var rows = [];
+    for (var r = 0; r < puzzle.numRows; r++) {
+      var cols = [];
+      for (var c = 0; c < puzzle.numCols; c++) {
+        cols.push(new Cell(r, c, puzzle.minNum, puzzle.maxNum));
+      }
+      rows.push(cols);
+    }
+    puzzle.rows = rows;
+    puzzle.problems = findProblems(rows);
+  }
+
+  function findProblems(rows) {
+    var problems = [];
+
+    var dirs = [
+      [1, 0], // right
+      [-1, 0], // left
+      [0, 1], // down
+      [0, -1], // up
+      [1, 1], // right/down
+      [1, -1], // right/up
+      [-1, 1], // left/down
+      [-1, -1], // left/up
+    ];
+
+    rows.forEach(row => {
+      row.forEach(origin => {
+        dirs.forEach((dir) => {
+          origin.matches = findMatches(rows, origin, dir);
+          if (origin.matches) {
+            problems.push([origin, ...origin.matches]);
+          }
+        });
+      });
+    });
+    return problems.sort();
+  }
+
+  /**
+   * Sums up cells in direction `dir`. Until it's equal or too many.
+   * There must be at least 2 cells.
+   * @return an array of matching cells or false
+   */
+  function findMatches(rows, origin, dir) {
+    var cells = [],
+      sum = 0;
+    do {
+      var nextRow = rows[dir[0] * (cells.length + 1) + origin.row];
+      if (nextRow == undefined) {
+        return false;
+      }
+      var nextCell = nextRow[dir[1] * (cells.length + 1) + origin.col];
+      if (nextCell == undefined) {
+        return false;
+      }
+      cells.push(nextCell);
+      sum += nextCell.num;
+    } while (sum < origin.num);
+    if (sum == origin.num && cells.length > 1) {
+      return cells;
+    }
+    return false;
+  }
+
+  // public functions
+  this.forEach = function(callback) {
+    this.rows.forEach(callback);
   };
 };
 
@@ -31,7 +113,6 @@ var App = {
   btnSolve: $('.solve'),
   btnRandom: $('.random'),
   btnNext: $('.next'),
-  puzzle: [],
 
   init(opts) {
     var self = this;
@@ -78,8 +159,16 @@ var App = {
   },
 
   handleGenerate(e) {
-    this.puzzle = this.generate(this.rows.val(), this.cols.val());
-    this.update();
+    this.puzzle = new Puzzle({
+      rows: this.rows.val(),
+      cols: this.cols.val(),
+      seed: this.seed.val(),
+      min: 1,
+      max: this.max
+    });
+
+    this.render(this.puzzle);
+
     this.handleResize();
   },
 
@@ -170,7 +259,7 @@ var App = {
 
     var $solutions = $('.solutions');
     $solutions.empty();
-    this.problems.forEach((prob) => {
+    this.puzzle.problems.forEach((prob) => {
       var origin = prob[0],
           last = prob[prob.length - 1],
           $oval = $('<div />').addClass('oval').attr({
@@ -182,36 +271,6 @@ var App = {
       origin.elm.addClass('match')
       alignOval($oval);
     });
-  },
-
- /**
-  * Sums up cells in direction `dir`. Until it's equal or too many.
-  * There must be at least 2 cells.
-  * @return an array of matching cells or false
-  */
-  sumDirection(puzzle, cell, dir) {
-    var cells = [],
-        sum = 0;
-    do {
-      var nextRow = puzzle[dir[0] * (cells.length + 1) + cell.row];
-      if (nextRow == undefined) {
-        return false;
-      }
-      var nextCell = nextRow[dir[1] * (cells.length + 1) + cell.col];
-      if (nextCell == undefined) {
-        return false;
-      }
-      cells.push(nextCell);
-      sum += nextCell.num;
-    } while (sum < cell.num);
-    if (sum == cell.num && cells.length > 1) {
-      return cells;
-    }
-    return false;
-  },
-
-  update() {
-    this.render(this.puzzle);
   },
 
   render(puzzle) {
@@ -226,50 +285,6 @@ var App = {
     });
     $('.puzzle').html(table);
   },
-
-  generate(numRows, numCols) {
-    $('.solutions').empty();
-    Random.seed = parseInt(this.seed.val());
-
-    var rows = [];
-    for (var r = 0; r < numRows; r++) {
-      var cols = [];
-      for (var c = 0; c < numCols; c++) {
-        cols.push(new Cell(r, c, this.max));
-      }
-      rows.push(cols);
-    }
-    // find problems
-    this.findProblems(rows);
-    return rows;
-  },
-
-  findProblems(puzzle) {
-    var problems = [];
-    
-    var dirs = [
-      [1, 0], // right
-      [-1, 0], // left
-      [0, 1], // down
-      [0, -1], // up
-      [1, 1], // right/down
-      [1, -1], // right/up
-      [-1, 1], // left/down
-      [-1, -1], // left/up
-    ];
-
-    puzzle.forEach(row => {
-      row.forEach(origin => {
-        dirs.forEach((dir) => {
-          origin.matches = this.sumDirection(puzzle, origin, dir);
-          if (origin.matches) {
-            problems.push([origin, ...origin.matches]);
-          }
-        });
-      });
-    });
-    this.problems = problems.sort();
-  }
 }
 
 App.init({
