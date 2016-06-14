@@ -109,6 +109,7 @@ var App = {
   cols: $('input[name="cols"]'),
   seed: $('input[name="seed"]'),
   checkSolution: $('input[name="show-solution"]'),
+  checkHint: $('input[name="show-hint"]'),
   btnResize: $('.resize'),
   btnSolve: $('.solve'),
   btnRandom: $('.random'),
@@ -125,6 +126,7 @@ var App = {
     this.btnRandom.on('click', this.handleRandom.bind(this));
     this.btnNext.on('click', this.handleNext.bind(this));
     this.checkSolution.on('change', this.handleCheckSolution.bind(this));
+    this.checkHint.on('change', (e) => {this.renderHints(e.target.checked)});
 
     // always start with something
     this.parseSeedFromLocation();
@@ -149,6 +151,8 @@ var App = {
   },
 
   handleResize() {
+    this.renderHints(this.checkHint.prop('checked'));
+
     if (this.checkSolution.prop('checked')) {
       this.renderSolutions();
     }
@@ -192,8 +196,18 @@ var App = {
       this.renderSolutions();
     } else {
       $('.solutions').empty();
-      $('.match').removeClass('match');
     }
+  },
+
+  renderHints(show) {
+    this.puzzle.problems.forEach((prob) => {
+      var origin = prob[0];
+      if (show) {
+        origin.elm.addClass('match')
+      } else {
+        origin.elm.removeClass('match')
+      }
+    });
   },
 
   renderProblems() {
@@ -271,7 +285,6 @@ var App = {
           });
 
       $solutions.append($oval);
-      origin.elm.addClass('match')
       alignOval($oval);
     });
   },
