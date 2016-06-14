@@ -1,6 +1,8 @@
 body {
+  margin: 0 auto;
   text-align: center;
   padding: 5%;
+  width: 100%;
 }
 
 section {
@@ -28,11 +30,7 @@ h1 img {
 
 table {
   border-collapse: collapse;
-}
-
-td {
-  padding: .5em;
-  border: 1px solid #ccc;
+  width: 100%;
 }
 
 .match {
@@ -42,16 +40,45 @@ td {
 }
 
 .puzzle {
-  font-size: 1.1em;
   border: 2px solid black;
-  display: inline-block;
   margin: 2em auto 1em;
+  // disable selection for now
+  -moz-user-select: none; -webkit-user-select: none; -ms-user-select:none; user-select:none;-o-user-select:none;
+}
+
+.td--cell {
+  border: 1px solid #ccc;
+  position: relative;
+  margin: 0;
+  padding: 0;
+  width: auto;
+}
+
+.td--cell:before {
+  content: '';
+  display: block;
+  padding-top: 100%;
+}
+
+.cell {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+
+  font-size: 2.5vw;
+  font-family: monospace;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .oval {
   position: absolute;
   border: .15em solid rgba(100,100,255,.5);
-  border-radius: 1em;
+  border-radius: 9em;
   transition: none;
 }
 
@@ -64,5 +91,6 @@ td {
 *,
 *:before,
 *:after {
-  transition: all 0.3s ease
+  transition: all 0.3s ease;
+  box-sizing: border-box;
 }

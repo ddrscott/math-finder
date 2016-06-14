@@ -280,7 +280,8 @@ var App = {
     puzzle.forEach(row => {
       var tr = $('<tr/>');
       row.forEach(col => {
-        col.elm = $('<td />').attr('id', col.id()).text(col.num);
+        col.elm = $('<td id="' + col.id() + '" class="td--cell" />')
+          .append($('<div class="cell"/>').text(col.num));
         tr.append(col.elm);
       });
       $table.append(tr);
