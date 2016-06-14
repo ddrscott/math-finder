@@ -167,6 +167,8 @@ var App = {
       max: this.max
     });
 
+    window.location.hash = this.seed.val();
+
     this.render(this.puzzle);
 
     this.handleResize();
@@ -274,16 +276,16 @@ var App = {
   },
 
   render(puzzle) {
-    var table = $('<table />');
+    var $table = $('<table />');
     puzzle.forEach(row => {
       var tr = $('<tr/>');
       row.forEach(col => {
         col.elm = $('<td />').attr('id', col.id()).text(col.num);
         tr.append(col.elm);
       });
-      table.append(tr);
+      $table.append(tr);
     });
-    $('.puzzle').html(table);
+    $('.puzzle').html($table);
   },
 }
 
