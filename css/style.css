@@ -82,6 +82,12 @@ table {
   transition: none;
 }
 
+.problem-count {
+  font-size: 1.5em;
+  font-family: monospace;
+  font-weight: bold;
+}
+
 @media print {
   .no-print {
     display: none;

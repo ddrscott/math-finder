@@ -169,6 +169,7 @@ var App = {
 
     window.location.hash = this.seed.val();
 
+    $('.problem-count').text(this.puzzle.problems.length);
     this.render(this.puzzle);
 
     this.handleResize();
