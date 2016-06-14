@@ -43,11 +43,13 @@ var App = {
     this.btnSolve.on('click', this.handleSolve.bind(this));
     this.btnRandom.on('click', this.handleRandom.bind(this));
     this.btnNext.on('click', this.handleNext.bind(this));
-    this.seed.on('change', this.handleSeedChange.bind(this));
     this.checkSolution.on('change', this.handleCheckSolution.bind(this));
 
     // always start with something
-    this.handleRandom();
+    this.parseSeedFromLocation();
+    if (this.puzzle == undefined) {
+      this.handleRandom();
+    }
 
 		$(window).on('resize', function(e) {
 			clearTimeout(self.timedResize);
@@ -57,19 +59,22 @@ var App = {
 		});
   },
 
+  parseSeedFromLocation() {
+    var seed = window.location.hash.replace(/\D/g, '');
+    if (seed.length > 0) {
+      this.seed.val(seed);
+      this.handleGenerate(); 
+    }
+  },
+
   handleResize() {
     if (this.checkSolution.prop('checked')) {
-      this.solve();
       this.renderSolutions();
     }
   },
 
   handleCheckSolution(e) {
     this.handleSolve(e);
-  },
-
-  handleSeedChange(e) {
-    $('.puzzle').attr('data-seed', this.seed.val());
   },
 
   handleGenerate(e) {
@@ -91,25 +96,16 @@ var App = {
   },
 
   handleSolve(e) {
-    if ($('.oval').length > 0) {
-      $('.oval').remove();
+    if (this.checkSolution.prop('checked')) {
+      this.renderSolutions();
+    } else {
+      $('.solutions').empty();
       $('.match').removeClass('match');
-      return;
     }
-
-    this.solve();
-    this.renderSolutions();
   },
 
-  solve() {
-    var puzzle = this.puzzle,
-      solutions = $('.solutions');
-    solutions.empty();
-    puzzle.forEach(row => {
-      row.forEach(cell => {
-        this.markSums(puzzle, cell, solutions);
-      });
-    });
+  renderProblems() {
+    var problems = $('.problems'); 
   },
 
   renderSolutions() {
@@ -172,50 +168,30 @@ var App = {
       rotate(oval, deg);
     }
 
-    $('.oval').each(function(i) {
-      alignOval($(this));
+    var $solutions = $('.solutions');
+    $solutions.empty();
+    this.problems.forEach((prob) => {
+      var origin = prob[0],
+          last = prob[prob.length - 1],
+          $oval = $('<div />').addClass('oval').attr({
+            'data-from': origin.id(),
+            'data-to': last.id()
+          });
+
+      $solutions.append($oval);
+      origin.elm.addClass('match')
+      alignOval($oval);
     });
   },
 
-    /**
-  * Adds 'match2-4' to any cells which sum to the origin cell.
-  */
-  markSums(puzzle, origin, solutions) {
-    var dirs = [
-      [1, 0], // right
-      [-1, 0], // left
-      [0, 1], // down
-      [0, -1], // up
-      [1, 1], // right/down
-      [1, -1], // right/up
-      [-1, 1], // left/down
-      [-1, -1], // left/up
-    ];
-    dirs.forEach((dir) => {
-      origin.matches = this.sumDirection(puzzle, origin, dir);
-      if (origin.matches) {
-        var last = origin.matches[origin.matches.length - 1];
-        solutions.append(
-          $('<div />')
-            .addClass('oval')
-            .attr({
-              'data-from': origin.id(),
-              'data-to': last.id()
-            })
-        );
-        origin.elm.addClass('match')
-      }
-    });
-  },
-
-    /**
+ /**
   * Sums up cells in direction `dir`. Until it's equal or too many.
   * There must be at least 2 cells.
   * @return an array of matching cells or false
   */
   sumDirection(puzzle, cell, dir) {
     var cells = [],
-      sum = 0;
+        sum = 0;
     do {
       var nextRow = puzzle[dir[0] * (cells.length + 1) + cell.row];
       if (nextRow == undefined) {
@@ -263,7 +239,36 @@ var App = {
       }
       rows.push(cols);
     }
+    // find problems
+    this.findProblems(rows);
     return rows;
+  },
+
+  findProblems(puzzle) {
+    var problems = [];
+    
+    var dirs = [
+      [1, 0], // right
+      [-1, 0], // left
+      [0, 1], // down
+      [0, -1], // up
+      [1, 1], // right/down
+      [1, -1], // right/up
+      [-1, 1], // left/down
+      [-1, -1], // left/up
+    ];
+
+    puzzle.forEach(row => {
+      row.forEach(origin => {
+        dirs.forEach((dir) => {
+          origin.matches = this.sumDirection(puzzle, origin, dir);
+          if (origin.matches) {
+            problems.push([origin, ...origin.matches]);
+          }
+        });
+      });
+    });
+    this.problems = problems.sort();
   }
 }
 
@@ -272,3 +277,5 @@ App.init({
   cols: 15,
   max: 15
 });
+
+window.App = App;
