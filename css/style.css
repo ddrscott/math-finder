@@ -85,18 +85,16 @@ table {
 
 .problems {
   width: 100%;
-  -moz-column-width: 8em;
-  -moz-columns: 8em;
-  -webkit-columns: 8em;
-  columns: 8em;
+  -moz-column-width: 9em;
+  -moz-columns: 9em;
+  -webkit-columns: 9em;
+  columns: 9em;
 }
 
 .problem {
   font-family: monospace;
   text-align: right;
   color: black;
-  overflow: hidden;
-  white-space: nowrap;
 }
 
 ol.problems {
