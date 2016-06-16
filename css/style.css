@@ -28,9 +28,12 @@ h1 img {
   vertical-align: bottom;
 }
 
+h2 {
+  margin-bottom: 0;
+}
+
 table {
   border-collapse: collapse;
-  width: 100%;
 }
 
 .match,
@@ -41,35 +44,26 @@ table {
 }
 
 .puzzle {
+  display: inline-block;
   border: 2px solid black;
   margin: 2em auto 1em;
+  max-width: 100%;
+  overflow: auto;
   // disable selection for now
   -moz-user-select: none; -webkit-user-select: none; -ms-user-select:none; user-select:none;-o-user-select:none;
 }
 
 .td--cell {
   border: 1px solid #ccc;
-  position: relative;
   margin: 0;
   padding: 0;
-  width: auto;
-}
-
-.td--cell:before {
-  content: '';
-  display: block;
-  padding-top: 100%;
 }
 
 .cell {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-
-  font-size: 2.5vw;
+  font-size: 1.1em;
   font-family: monospace;
+  width: 2.75em;
+  height: 2.75em;
 
   display: flex;
   align-items: center;
@@ -92,9 +86,9 @@ table {
 .problems {
   width: 100%;
   -moz-column-width: 8em;
-       -moz-columns: 8em;
-    -webkit-columns: 8em;
-            columns: 8em;
+  -moz-columns: 8em;
+  -webkit-columns: 8em;
+  columns: 8em;
 }
 
 .problem {
@@ -110,8 +104,9 @@ ol.problems {
   list-style: none;
   padding: 0;
 }
-ol.problems li:before {
-  color: gray;
+
+ol.problems li {
+  margin-right: 1em;
 }
 
 @media print {
@@ -121,8 +116,8 @@ ol.problems li:before {
 }
 
 *,
-*:before,
-*:after {
-  transition: all 0.3s ease;
-  box-sizing: border-box;
-}
+  *:before,
+  *:after {
+    transition: all 0.3s ease;
+    box-sizing: border-box;
+  }
