@@ -21,7 +21,9 @@ var Cell = function(row, col, min, max) {
     return 'cell-' + self.row + '-' + self.col;
   };
 };
-
+Cell.prototype.toString = function() {
+  return this.num.toString();
+}
 var Puzzle = function(options) {
   this.numRows = parseInt(options.rows || 3);
   this.numCols = parseInt(options.cols || 3);
@@ -211,7 +213,16 @@ var App = {
   },
 
   renderProblems() {
-    var problems = $('.problems'); 
+    var $problems = $('.problems');
+    $problems.empty();
+    this.puzzle.problems.forEach((prob) => {
+      const copy = prob.slice(),
+          $answer = $('<span class="answer" />').text(copy.shift()),
+          $parts = $('<span class="parts" />').text(copy.reverse().join(" + ")),
+          $li = $('<li class="problem" />').append($parts).append(" = ").append($answer);
+
+      $problems.append($li);
+    });
   },
 
   renderSolutions() {
@@ -301,6 +312,7 @@ var App = {
       $table.append(tr);
     });
     $('.puzzle').html($table);
+    this.renderProblems();
   },
 }
 

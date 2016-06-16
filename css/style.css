@@ -33,7 +33,8 @@ table {
   width: 100%;
 }
 
-.match {
+.match,
+.answer {
   font-weight: bold;
   color: rgba(100,100,255,1);
   transition: none;
@@ -86,6 +87,31 @@ table {
   font-size: 1.5em;
   font-family: monospace;
   font-weight: bold;
+}
+
+.problems {
+  width: 100%;
+  -moz-column-width: 8em;
+       -moz-columns: 8em;
+    -webkit-columns: 8em;
+            columns: 8em;
+}
+
+.problem {
+  font-family: monospace;
+  text-align: right;
+  color: black;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+ol.problems {
+  display: inline-block;
+  list-style: none;
+  padding: 0;
+}
+ol.problems li:before {
+  color: gray;
 }
 
 @media print {
