@@ -1,58 +1,53 @@
-<!DOCTYPE html>
-<html >
+<!doctype html>
+<html>
   <head>
-    <meta charset="UTF-8">
+    <meta content="IE=edge" http-equiv="X-UA-Compatible">
+    <meta charset="utf-8">
+    <meta content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" name="viewport">
+
+    <!-- Use title if it's in the page YAML frontmatter -->
     <title>Math Finder</title>
-    <meta name="viewport" content="width=device-width,initial-scale=1">
-    <link rel="stylesheet" href="css/normalize.css">
-    <link rel="stylesheet" href="css/style.css">
+
+    <link href="/stylesheets/style.css" rel="stylesheet" />
+
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/github-fork-ribbon-css/0.2.0/gh-fork-ribbon.min.css" />
     <!--[if lt IE 9]>
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-fork-ribbon-css/0.2.0/gh-fork-ribbon.ie.min.css" />
     <![endif]-->  
   </head>
-  <body>
-    <a class="github-fork-ribbon no-print" href="https://github.com/ddrscott/math-finder" title="Fork me on GitHub">Fork me on GitHub</a>
-    <h1>Math Finder <img src="example.png" width="88" height="38"/> </h1>
-    Print for your kids.
-    Get a pen[cil].
-    Step away from the computer.
-    Circle the problems.
-    Share with your friends.
-    <span class='problem-count'>?</span> addition problems. Can you find them all?
-    <section>
-      <div class="solutions"></div>
-      <div class="puzzle">Loading...</div>
-    </section>
-    <section>
-      <label>Rows: <input type='text' name='rows' /></label>
-      <label>Columns: <input type='text' name='cols' /></label>
-      <label>Puzzle #<input type='text' name='seed' /></label>
-    </section>
-    <section class="no-print">
-      <button class='resize'>Generate/Reset</button>
-      <button class='next'>Next</button>
-      <button class='random'>Random</button>
-    </section>
-    <section class="no-print">
-      <label><input type=checkbox name='show-hint'/> Show Hints</label>
-      <label><input type=checkbox name='show-solution'/> Show Matches</label>
-    </section>
-    <section>
-      <h2>Problems to find</h2>
-      <ol class="problems"></ol>
-    </section>
 
-    <script src='https://code.jquery.com/jquery-2.2.4.min.js'></script>
-    <script src='https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.34/browser.min.js'></script>
-    <script src="js/app.js" type="text/babel"></script>
-    <script>
-if(window.location.hostname != 'localhost'){(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-ga('create', 'UA-50126719-1', 'auto');
-ga('send', 'pageview');}
-   </script>
+  <body class="index">
+    <a class="github-fork-ribbon no-print" href="https://github.com/ddrscott/math-finder" title="Fork me on GitHub">Fork me on GitHub</a>
+<h1>Math Finder <img src="/images/example.png" width="88" height="38" alt="Example" /> </h1>
+Print for your kids.
+Get a pen[cil].
+Step away from the computer.
+Circle the problems.
+Share with your friends.
+<span class='problem-count'>?</span> addition problems. Can you find them all?
+<section>
+  <div class="solutions"></div>
+  <div class="puzzle">Loading...</div>
+</section>
+<section>
+  <label>Rows: <input type='text' name='rows' /></label>
+  <label>Columns: <input type='text' name='cols' /></label>
+  <label>Puzzle #<input type='text' name='seed' /></label>
+</section>
+<section class="no-print">
+  <button class='resize'>Generate/Reset</button>
+  <button class='next'>Next</button>
+  <button class='random'>Random</button>
+</section>
+<section class="no-print">
+  <label><input type=checkbox name='show-hint'/> Show Hints</label>
+  <label><input type=checkbox name='show-solution'/> Show Matches</label>
+</section>
+<section>
+  <h2>Problems to find</h2>
+  <ol class="problems"></ol>
+</section>
+
+    <script src="/javascripts/all.js"></script>
   </body>
 </html>

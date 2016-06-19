@@ -1,14 +1,18 @@
+'use strict';
+
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) arr2[i] = arr[i]; return arr2; } else { return Array.from(arr); } }
+
 var Random = {
   seed: 0,
 
-  int(min, max) {
+  int: function int(min, max) {
     this.seed = (this.seed * 9301 + 49297) % 233280;
     var rnd = this.seed / 233280;
     return parseInt(min + rnd * (max - min));
   }
-}
+};
 
-var Cell = function(row, col, min, max) {
+var Cell = function Cell(row, col, min, max) {
   var self = this;
 
   this.row = row;
@@ -17,19 +21,20 @@ var Cell = function(row, col, min, max) {
   this.max = max;
 
   this.num = Random.int(min, max);
-  this.id = function() {
+  this.id = function () {
     return 'cell-' + self.row + '-' + self.col;
   };
 };
-Cell.prototype.toString = function() {
+Cell.prototype.toString = function () {
   return this.num.toString();
-}
-var Puzzle = function(options) {
+};
+
+var Puzzle = function Puzzle(options) {
   this.numRows = parseInt(options.rows || 3);
   this.numCols = parseInt(options.cols || 3);
-  this.minNum  = parseInt(options.min  || 1);
-  this.maxNum  = parseInt(options.max  || 1);
-  this.seed    = parseInt(options.seed || 1);
+  this.minNum = parseInt(options.min || 1);
+  this.maxNum = parseInt(options.max || 1);
+  this.seed = parseInt(options.seed || 1);
 
   generate(this);
 
@@ -50,23 +55,22 @@ var Puzzle = function(options) {
   function findProblems(rows) {
     var problems = [];
 
-    var dirs = [
-      [1, 0], // right
-      [-1, 0], // left
-      [0, 1], // down
-      [0, -1], // up
-      [1, 1], // right/down
-      [1, -1], // right/up
-      [-1, 1], // left/down
-      [-1, -1], // left/up
-    ];
+    var dirs = [[1, 0], // right
+    [-1, 0], // left
+    [0, 1], // down
+    [0, -1], // up
+    [1, 1], // right/down
+    [1, -1], // right/up
+    [-1, 1], // left/down
+    [-1, -1]];
 
-    rows.forEach(row => {
-      row.forEach(origin => {
-        dirs.forEach((dir) => {
+    // left/up
+    rows.forEach(function (row) {
+      row.forEach(function (origin) {
+        dirs.forEach(function (dir) {
           origin.matches = findMatches(rows, origin, dir);
           if (origin.matches) {
-            problems.push([origin, ...origin.matches]);
+            problems.push([origin].concat(_toConsumableArray(origin.matches)));
           }
         });
       });
@@ -81,7 +85,7 @@ var Puzzle = function(options) {
    */
   function findMatches(rows, origin, dir) {
     var cells = [],
-      sum = 0;
+        sum = 0;
     do {
       var nextRow = rows[dir[0] * (cells.length + 1) + origin.row];
       if (nextRow == undefined) {
@@ -101,7 +105,7 @@ var Puzzle = function(options) {
   }
 
   // public functions
-  this.forEach = function(callback) {
+  this.forEach = function (callback) {
     this.rows.forEach(callback);
   };
 };
@@ -117,7 +121,9 @@ var App = {
   btnRandom: $('.random'),
   btnNext: $('.next'),
 
-  init(opts) {
+  init: function init(opts) {
+    var _this = this;
+
     var self = this;
 
     this.max = opts.max;
@@ -128,7 +134,9 @@ var App = {
     this.btnRandom.on('click', this.handleRandom.bind(this));
     this.btnNext.on('click', this.handleNext.bind(this));
     this.checkSolution.on('change', this.handleCheckSolution.bind(this));
-    this.checkHint.on('change', (e) => {this.renderHints(e.target.checked)});
+    this.checkHint.on('change', function (e) {
+      _this.renderHints(e.target.checked);
+    });
 
     // always start with something
     this.parseSeedFromLocation();
@@ -136,23 +144,23 @@ var App = {
       this.handleRandom();
     }
 
-		$(window).on('resize', function(e) {
-			clearTimeout(self.timedResize);
-			self.timedResize = setTimeout(function() {
+    $(window).on('resize', function (e) {
+      clearTimeout(self.timedResize);
+      self.timedResize = setTimeout(function () {
         self.handleResize();
-			}, 100);
-		});
+      }, 100);
+    });
   },
 
-  parseSeedFromLocation() {
+  parseSeedFromLocation: function parseSeedFromLocation() {
     var seed = window.location.hash.replace(/\D/g, '');
     if (seed.length > 0) {
       this.seed.val(seed);
-      this.handleGenerate(); 
+      this.handleGenerate();
     }
   },
 
-  handleResize() {
+  handleResize: function handleResize() {
     this.renderHints(this.checkHint.prop('checked'));
 
     if (this.checkSolution.prop('checked')) {
@@ -160,11 +168,11 @@ var App = {
     }
   },
 
-  handleCheckSolution(e) {
+  handleCheckSolution: function handleCheckSolution(e) {
     this.handleSolve(e);
   },
 
-  handleGenerate(e) {
+  handleGenerate: function handleGenerate(e) {
     this.puzzle = new Puzzle({
       rows: this.rows.val(),
       cols: this.cols.val(),
@@ -181,19 +189,19 @@ var App = {
     this.handleResize();
   },
 
-  handleNext(e) {
+  handleNext: function handleNext(e) {
     this.seed.val(parseInt(this.seed.val() || '0') + 1);
     this.seed.change();
     this.handleGenerate(e);
   },
 
-  handleRandom(e) {
+  handleRandom: function handleRandom(e) {
     this.seed.val(parseInt(Math.random() * 1000));
     this.seed.change();
     this.handleGenerate(e);
   },
 
-  handleSolve(e) {
+  handleSolve: function handleSolve(e) {
     if (this.checkSolution.prop('checked')) {
       this.renderSolutions();
     } else {
@@ -201,22 +209,22 @@ var App = {
     }
   },
 
-  renderHints(show) {
-    this.puzzle.problems.forEach((prob) => {
+  renderHints: function renderHints(show) {
+    this.puzzle.problems.forEach(function (prob) {
       var origin = prob[0];
       if (show) {
-        origin.elm.addClass('match')
+        origin.elm.addClass('match');
       } else {
-        origin.elm.removeClass('match')
+        origin.elm.removeClass('match');
       }
     });
   },
 
-  renderProblems() {
+  renderProblems: function renderProblems() {
     var $problems = $('.problems');
     $problems.empty();
-    this.puzzle.problems.forEach((prob) => {
-      const copy = prob.slice(),
+    this.puzzle.problems.forEach(function (prob) {
+      var copy = prob.slice(),
           $answer = $('<span class="answer" />').text(copy.shift()),
           $parts = $('<span class="parts" />').text(copy.reverse().join(" + ")),
           $li = $('<li class="problem" />').append($parts).append(" = ").append($answer);
@@ -225,7 +233,7 @@ var App = {
     });
   },
 
-  renderSolutions() {
+  renderSolutions: function renderSolutions() {
     function center(e) {
       var offset = e.offset();
       return {
@@ -238,7 +246,7 @@ var App = {
       return {
         x: (p2.x + p1.x) / 2,
         y: (p2.y + p1.y) / 2
-      }
+      };
     }
 
     function rotate(elm, degrees) {
@@ -250,24 +258,23 @@ var App = {
       });
     }
 
-	  function alignOval(oval) {
+    function alignOval(oval) {
       // element
       var e1 = $('#' + oval.data('from')),
-        e2 = $('#' + oval.data('to')),
+          e2 = $('#' + oval.data('to')),
+          minDim = 0.6 * Math.min(e1.outerWidth(), e1.outerHeight(), e2.outerWidth(), e2.outerHeight()),
 
-        minDim = 0.6 * Math.min(e1.outerWidth(), e1.outerHeight(), e2.outerWidth(), e2.outerHeight()),
+      // centers
+      c1 = center(e1),
+          c2 = center(e2),
 
-        // centers
-        c1 = center(e1),
-        c2 = center(e2),
+      // midpoint
+      mid = midpoint(c2, c1),
 
-        // midpoint
-        mid = midpoint(c2, c1),
-
-        // distance between center points
-        dx2 = Math.pow(c2.x - c1.x, 2),
-        dy2 = Math.pow(c2.y - c1.y, 2),
-        dist = Math.sqrt(dx2 + dy2);
+      // distance between center points
+      dx2 = Math.pow(c2.x - c1.x, 2),
+          dy2 = Math.pow(c2.y - c1.y, 2),
+          dist = Math.sqrt(dx2 + dy2);
 
       // set oval dimensions
       oval.height(minDim);
@@ -275,8 +282,8 @@ var App = {
 
       // align center of oval with midpoint between elements
       oval.offset({
-        left: mid.x - (oval.outerWidth() / 2),
-        top: mid.y - (oval.outerHeight() / 2)
+        left: mid.x - oval.outerWidth() / 2,
+        top: mid.y - oval.outerHeight() / 2
       });
 
       // angle between element centers
@@ -287,34 +294,33 @@ var App = {
 
     var $solutions = $('.solutions');
     $solutions.empty();
-    this.puzzle.problems.forEach((prob) => {
+    this.puzzle.problems.forEach(function (prob) {
       var origin = prob[0],
           last = prob[prob.length - 1],
           $oval = $('<div />').addClass('oval').attr({
-            'data-from': origin.id(),
-            'data-to': last.id()
-          });
+        'data-from': origin.id(),
+        'data-to': last.id()
+      });
 
       $solutions.append($oval);
       alignOval($oval);
     });
   },
 
-  render(puzzle) {
+  render: function render(puzzle) {
     var $table = $('<table />');
-    puzzle.forEach(row => {
+    puzzle.forEach(function (row) {
       var tr = $('<tr/>');
-      row.forEach(col => {
-        col.elm = $('<td id="' + col.id() + '" class="td--cell" />')
-          .append($('<div class="cell"/>').text(col.num));
+      row.forEach(function (col) {
+        col.elm = $('<td id="' + col.id() + '" class="td--cell" />').append($('<div class="cell"/>').text(col.num));
         tr.append(col.elm);
       });
       $table.append(tr);
     });
     $('.puzzle').html($table);
     this.renderProblems();
-  },
-}
+  }
+};
 
 App.init({
   rows: 15,
