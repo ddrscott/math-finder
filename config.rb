@@ -48,6 +48,9 @@ configure :build do
   # activate :minify_javascript
 end
 
+activate :relative_assets
+set :relative_links, true
+
 after_configuration do
   sprockets.append_path 'vendor/'
 end
