@@ -54,6 +54,12 @@ table {
   overflow: auto;
   // disable selection for now
   -moz-user-select: none; -webkit-user-select: none; -ms-user-select:none; user-select:none;-o-user-select:none;
+  position: relative;
+}
+
+.solutions {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
 }
 
 .td--cell {
@@ -74,7 +80,7 @@ table {
 }
 
 .oval {
-  position: absolute;
+  position: relative;
   border: .15em solid rgba(100,100,255,.5);
   border-radius: 9em;
   transition: none;
