@@ -37,6 +37,7 @@ h2 {
 
 table {
   border-collapse: collapse;
+  border: 2px solid black;
 }
 
 .match,
@@ -48,7 +49,6 @@ table {
 
 .puzzle {
   display: inline-block;
-  border: 2px solid black;
   margin: 2em auto 1em;
   max-width: 100%;
   overflow: auto;
@@ -102,7 +102,7 @@ table {
 
 .problem {
   font-family: monospace;
-  text-align: right;
+  text-align: center;
   color: black;
 }
 
@@ -113,7 +113,7 @@ ol.problems {
 }
 
 ol.problems li {
-  margin-right: 1em;
+  margin: 0 auto;
 }
 
 @media print {
