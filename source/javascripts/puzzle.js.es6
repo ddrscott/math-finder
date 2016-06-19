@@ -45,7 +45,7 @@ var Puzzle = function(options) {
         });
       });
     });
-    return problems.sort((a,b) => a.num - b.num);
+    return problems.sort((a,b) => (a.length * 1000 + a[0].num) - (b.length * 1000 + b[0].num));
   }
 
   /**
