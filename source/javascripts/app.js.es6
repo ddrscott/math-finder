@@ -24,6 +24,7 @@ var Cell = function(row, col, min, max) {
 Cell.prototype.toString = function() {
   return this.num.toString();
 }
+
 var Puzzle = function(options) {
   this.numRows = parseInt(options.rows || 3);
   this.numCols = parseInt(options.cols || 3);
