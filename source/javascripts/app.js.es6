@@ -98,9 +98,9 @@ var App = {
     $problems.empty();
     this.puzzle.problems.forEach((prob) => {
       const copy = prob.slice(),
-          $answer = $('<span class="answer" />').text(copy.shift()),
-          $parts = $('<span class="parts" />').text(copy.reverse().join(" + ")),
-          $li = $('<li class="problem" />').append($parts).append(" = ").append($answer);
+        $answer = $('<span class="answer" />').text(copy.shift()),
+        $parts = $('<span class="parts" />').text(copy.reverse().join(" + ")),
+        $li = $('<li class="problem" />').append($parts).append(" = ").append($answer);
 
       $problems.append($li);
     });
@@ -131,7 +131,7 @@ var App = {
       });
     }
 
-	  function alignOval(oval) {
+    function alignOval(oval) {
       // element
       var e1 = $('#' + oval.data('from')),
         e2 = $('#' + oval.data('to')),
@@ -170,11 +170,11 @@ var App = {
     $solutions.empty();
     this.puzzle.problems.forEach((prob) => {
       var origin = prob[0],
-          last = prob[prob.length - 1],
-          $oval = $('<div />').addClass('oval').attr({
-            'data-from': origin.id(),
-            'data-to': last.id()
-          });
+        last = prob[prob.length - 1],
+        $oval = $('<div />').addClass('oval').attr({
+        'data-from': origin.id(),
+        'data-to': last.id()
+      });
 
       $solutions.append($oval);
       alignOval($oval);
