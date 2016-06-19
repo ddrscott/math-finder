@@ -14,6 +14,8 @@ gem 'middleman-livereload'
 gem 'middleman-sprockets', '~> 4.0.0.rc'
 gem 'sprockets-es6'
 
+gem 'middleman-gh-pages'
+
 # front end
 gem 'jquery-rails',      require: false
 # gem 'font-awesome-sass', require: false
