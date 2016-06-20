@@ -51,6 +51,13 @@ end
 activate :relative_assets
 set :relative_links, true
 
+# Automatic image dimensions on image_tag helper
+activate :autoprefixer do |config|
+  config.browsers = ['last 2 versions']
+  config.cascade  = true
+  config.inline   = false
+end
+
 after_configuration do
   sprockets.append_path 'vendor/'
 end
