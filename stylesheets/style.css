@@ -392,7 +392,8 @@ h2 {
   margin-bottom: 0; }
 
 table {
-  border-collapse: collapse; }
+  border-collapse: collapse;
+  border: 2px solid black; }
 
 .match,
 .answer {
@@ -402,7 +403,6 @@ table {
 
 .puzzle {
   display: inline-block;
-  border: 2px solid black;
   margin: 2em auto 1em;
   max-width: 100%;
   overflow: auto;
@@ -410,7 +410,15 @@ table {
   -webkit-user-select: none;
   -ms-user-select: none;
   user-select: none;
-  -o-user-select: none; }
+  -o-user-select: none;
+  position: relative; }
+
+.solutions {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0; }
 
 .td--cell {
   border: 1px solid #ccc;
@@ -427,7 +435,7 @@ table {
   justify-content: center; }
 
 .oval {
-  position: absolute;
+  position: relative;
   border: 0.15em solid rgba(100, 100, 255, 0.5);
   border-radius: 9em;
   transition: none; }
@@ -446,7 +454,7 @@ table {
 
 .problem {
   font-family: monospace;
-  text-align: right;
+  text-align: center;
   color: black; }
 
 ol.problems {
@@ -455,7 +463,7 @@ ol.problems {
   padding: 0; }
 
 ol.problems li {
-  margin-right: 1em; }
+  margin: 0 auto; }
 
 @media print {
   .no-print {

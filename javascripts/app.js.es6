@@ -1,115 +1,5 @@
 'use strict';
 
-function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) arr2[i] = arr[i]; return arr2; } else { return Array.from(arr); } }
-
-var Random = {
-  seed: 0,
-
-  int: function int(min, max) {
-    this.seed = (this.seed * 9301 + 49297) % 233280;
-    var rnd = this.seed / 233280;
-    return parseInt(min + rnd * (max - min));
-  }
-};
-
-var Cell = function Cell(row, col, min, max) {
-  var self = this;
-
-  this.row = row;
-  this.col = col;
-  this.min = min;
-  this.max = max;
-
-  this.num = Random.int(min, max);
-  this.id = function () {
-    return 'cell-' + self.row + '-' + self.col;
-  };
-};
-Cell.prototype.toString = function () {
-  return this.num.toString();
-};
-
-var Puzzle = function Puzzle(options) {
-  this.numRows = parseInt(options.rows || 3);
-  this.numCols = parseInt(options.cols || 3);
-  this.minNum = parseInt(options.min || 1);
-  this.maxNum = parseInt(options.max || 1);
-  this.seed = parseInt(options.seed || 1);
-
-  generate(this);
-
-  function generate(puzzle) {
-    Random.seed = puzzle.seed;
-    var rows = [];
-    for (var r = 0; r < puzzle.numRows; r++) {
-      var cols = [];
-      for (var c = 0; c < puzzle.numCols; c++) {
-        cols.push(new Cell(r, c, puzzle.minNum, puzzle.maxNum));
-      }
-      rows.push(cols);
-    }
-    puzzle.rows = rows;
-    puzzle.problems = findProblems(rows);
-  }
-
-  function findProblems(rows) {
-    var problems = [];
-
-    var dirs = [[1, 0], // right
-    [-1, 0], // left
-    [0, 1], // down
-    [0, -1], // up
-    [1, 1], // right/down
-    [1, -1], // right/up
-    [-1, 1], // left/down
-    [-1, -1]];
-
-    // left/up
-    rows.forEach(function (row) {
-      row.forEach(function (origin) {
-        dirs.forEach(function (dir) {
-          origin.matches = findMatches(rows, origin, dir);
-          if (origin.matches) {
-            problems.push([origin].concat(_toConsumableArray(origin.matches)));
-          }
-        });
-      });
-    });
-    return problems.sort();
-  }
-
-  /**
-   * Sums up cells in direction `dir`. Until it's equal or too many.
-   * There must be at least 2 cells.
-   * @return an array of matching cells or false
-   */
-  function findMatches(rows, origin, dir) {
-    var cells = [],
-        sum = 0;
-    do {
-      var nextRow = rows[dir[0] * (cells.length + 1) + origin.row];
-      if (nextRow == undefined) {
-        return false;
-      }
-      var nextCell = nextRow[dir[1] * (cells.length + 1) + origin.col];
-      if (nextCell == undefined) {
-        return false;
-      }
-      cells.push(nextCell);
-      sum += nextCell.num;
-    } while (sum < origin.num);
-    if (sum == origin.num && cells.length > 1) {
-      return cells;
-    }
-    return false;
-  }
-
-  // public functions
-  this.forEach = function (callback) {
-    this.rows.forEach(callback);
-  };
-};
-
 var App = {
   rows: $('input[name="rows"]'),
   cols: $('input[name="cols"]'),
@@ -143,13 +33,6 @@ var App = {
     if (this.puzzle == undefined) {
       this.handleRandom();
     }
-
-    $(window).on('resize', function (e) {
-      clearTimeout(self.timedResize);
-      self.timedResize = setTimeout(function () {
-        self.handleResize();
-      }, 100);
-    });
   },
 
   parseSeedFromLocation: function parseSeedFromLocation() {
@@ -157,14 +40,6 @@ var App = {
     if (seed.length > 0) {
       this.seed.val(seed);
       this.handleGenerate();
-    }
-  },
-
-  handleResize: function handleResize() {
-    this.renderHints(this.checkHint.prop('checked'));
-
-    if (this.checkSolution.prop('checked')) {
-      this.renderSolutions();
     }
   },
 
@@ -186,7 +61,11 @@ var App = {
     $('.problem-count').text(this.puzzle.problems.length);
     this.render(this.puzzle);
 
-    this.handleResize();
+    this.renderHints(this.checkHint.prop('checked'));
+
+    if (this.checkSolution.prop('checked')) {
+      this.renderSolutions();
+    }
   },
 
   handleNext: function handleNext(e) {
@@ -308,7 +187,9 @@ var App = {
   },
 
   render: function render(puzzle) {
-    var $table = $('<table />');
+    var $puzzle = $('.puzzle'),
+        $table = $('<table />');
+
     puzzle.forEach(function (row) {
       var tr = $('<tr/>');
       row.forEach(function (col) {
@@ -317,7 +198,8 @@ var App = {
       });
       $table.append(tr);
     });
-    $('.puzzle').html($table);
+    $puzzle.empty();
+    $puzzle.append($('<div class="solutions" />')).append($table);
     this.renderProblems();
   }
 };

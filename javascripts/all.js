@@ -11025,9 +11025,7 @@ if ( !noGlobal ) {
 
 return jQuery;
 }));
-'use strict';
-
-function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) arr2[i] = arr[i]; return arr2; } else { return Array.from(arr); } }
+"use strict";
 
 var Random = {
   seed: 0,
@@ -11038,6 +11036,9 @@ var Random = {
     return parseInt(min + rnd * (max - min));
   }
 };
+
+window.Random = Random;
+'use strict';
 
 var Cell = function Cell(row, col, min, max) {
   var self = this;
@@ -11055,6 +11056,10 @@ var Cell = function Cell(row, col, min, max) {
 Cell.prototype.toString = function () {
   return this.num.toString();
 };
+window.Cell = Cell;
+"use strict";
+
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) arr2[i] = arr[i]; return arr2; } else { return Array.from(arr); } }
 
 var Puzzle = function Puzzle(options) {
   this.numRows = parseInt(options.rows || 3);
@@ -11102,7 +11107,9 @@ var Puzzle = function Puzzle(options) {
         });
       });
     });
-    return problems.sort();
+    return problems.sort(function (a, b) {
+      return a.length * 1000 + a[0].num - (b.length * 1000 + b[0].num);
+    });
   }
 
   /**
@@ -11137,6 +11144,9 @@ var Puzzle = function Puzzle(options) {
   };
 };
 
+window.Puzzle = Puzzle;
+'use strict';
+
 var App = {
   rows: $('input[name="rows"]'),
   cols: $('input[name="cols"]'),
@@ -11170,13 +11180,6 @@ var App = {
     if (this.puzzle == undefined) {
       this.handleRandom();
     }
-
-    $(window).on('resize', function (e) {
-      clearTimeout(self.timedResize);
-      self.timedResize = setTimeout(function () {
-        self.handleResize();
-      }, 100);
-    });
   },
 
   parseSeedFromLocation: function parseSeedFromLocation() {
@@ -11184,14 +11187,6 @@ var App = {
     if (seed.length > 0) {
       this.seed.val(seed);
       this.handleGenerate();
-    }
-  },
-
-  handleResize: function handleResize() {
-    this.renderHints(this.checkHint.prop('checked'));
-
-    if (this.checkSolution.prop('checked')) {
-      this.renderSolutions();
     }
   },
 
@@ -11213,7 +11208,11 @@ var App = {
     $('.problem-count').text(this.puzzle.problems.length);
     this.render(this.puzzle);
 
-    this.handleResize();
+    this.renderHints(this.checkHint.prop('checked'));
+
+    if (this.checkSolution.prop('checked')) {
+      this.renderSolutions();
+    }
   },
 
   handleNext: function handleNext(e) {
@@ -11335,7 +11334,9 @@ var App = {
   },
 
   render: function render(puzzle) {
-    var $table = $('<table />');
+    var $puzzle = $('.puzzle'),
+        $table = $('<table />');
+
     puzzle.forEach(function (row) {
       var tr = $('<tr/>');
       row.forEach(function (col) {
@@ -11344,7 +11345,8 @@ var App = {
       });
       $table.append(tr);
     });
-    $('.puzzle').html($table);
+    $puzzle.empty();
+    $puzzle.append($('<div class="solutions" />')).append($table);
     this.renderProblems();
   }
 };
@@ -11356,5 +11358,8 @@ App.init({
 });
 
 window.App = App;
+
+
+
 
 
