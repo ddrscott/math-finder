@@ -12,15 +12,18 @@ var App = {
   init(opts) {
     var self = this;
 
-    this.max = opts.max;
-    this.rows.val(opts.rows);
-    this.cols.val(opts.cols);
+    // bind events
     this.btnResize.on('click', this.handleGenerate.bind(this));
     this.btnSolve.on('click', this.handleSolve.bind(this));
     this.btnRandom.on('click', this.handleRandom.bind(this));
     this.btnNext.on('click', this.handleNext.bind(this));
     this.checkSolution.on('change', this.handleCheckSolution.bind(this));
     this.checkHint.on('change', (e) => {this.renderHints(e.target.checked)});
+
+    // read options
+    this.max = opts.max;
+    this.rows.val(opts.rows);
+    this.cols.val(opts.cols);
 
     // always start with something
     this.parseSeedFromLocation();
@@ -196,10 +199,12 @@ var App = {
   },
 }
 
-App.init({
-  rows: 10,
-  cols: 10,
-  max: 15
+$(document).ready(() => {
+  App.init({
+    rows: 10,
+    cols: 10,
+    max: 15
+  });
 });
 
 window.App = App;
