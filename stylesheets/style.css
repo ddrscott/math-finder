@@ -368,7 +368,8 @@ body {
   margin: 0 auto;
   text-align: center;
   padding: 5%;
-  width: 100%; }
+  width: 100%;
+  max-width: 768px; }
 
 section {
   clear: both; }

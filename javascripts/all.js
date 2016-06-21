@@ -13882,9 +13882,7 @@ var App = {
 
     var self = this;
 
-    this.max = opts.max;
-    this.rows.val(opts.rows);
-    this.cols.val(opts.cols);
+    // bind events
     this.btnResize.on('click', this.handleGenerate.bind(this));
     this.btnSolve.on('click', this.handleSolve.bind(this));
     this.btnRandom.on('click', this.handleRandom.bind(this));
@@ -13893,6 +13891,11 @@ var App = {
     this.checkHint.on('change', function (e) {
       _this.renderHints(e.target.checked);
     });
+
+    // read options
+    this.max = opts.max;
+    this.rows.val(opts.rows);
+    this.cols.val(opts.cols);
 
     // always start with something
     this.parseSeedFromLocation();
@@ -14062,10 +14065,12 @@ var App = {
   }
 };
 
-App.init({
-  rows: 10,
-  cols: 10,
-  max: 15
+$(document).ready(function () {
+  App.init({
+    rows: Math.min(15, parseInt($(window).height() * 0.8 / 16 / 2.75)),
+    cols: Math.min(15, parseInt($(window).width() * 0.9 / 16 / 2.75)),
+    max: 15
+  });
 });
 
 window.App = App;
