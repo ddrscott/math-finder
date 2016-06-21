@@ -201,8 +201,8 @@ var App = {
 
 $(document).ready(() => {
   App.init({
-    rows: 10,
-    cols: 10,
+    rows: Math.min(15, parseInt($(window).height() * 0.8 / 16 / 2.75)),
+    cols: Math.min(15, parseInt($(window).width() * 0.9 / 16 / 2.75)),
     max: 15
   });
 });
