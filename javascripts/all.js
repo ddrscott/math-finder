@@ -13896,24 +13896,30 @@ var App = {
     this.max = opts.max;
     this.rows.val(opts.rows);
     this.cols.val(opts.cols);
+    this.seed.val(opts.seed);
 
-    // always start with something
-    this.parseSeedFromLocation();
-    if (this.puzzle == undefined) {
-      this.handleRandom();
-    }
+    this.handleGenerate();
 
     var hammer = new Hammer($('.puzzle')[0]);
     hammer.get('pan').set({ direction: Hammer.DIRECTION_ALL });
     hammer.on('pan', this.handleTouch.bind(this));
   },
 
-  parseSeedFromLocation: function parseSeedFromLocation() {
-    var seed = window.location.hash.replace(/\D/g, '');
-    if (seed.length > 0) {
-      this.seed.val(seed);
-      this.handleGenerate();
+  fromHash: function fromHash(hash) {
+    var result = {},
+        pairs = hash.split(",");
+
+    for (var i = 0; i < pairs.length; i++) {
+      var pair = pairs[i].split("=");
+      if (pair[1]) {
+        result[pair[0]] = pair[1];
+      }
     }
+    return result;
+  },
+
+  toHash: function toHash(puzzle) {
+    return "rows=" + puzzle.numRows + "," + "cols=" + puzzle.numCols + "," + "max=" + puzzle.maxNum + "," + "seed=" + puzzle.seed;
   },
 
   handleTouch: function handleTouch(e) {
@@ -13975,7 +13981,7 @@ var App = {
       max: this.max
     });
 
-    window.location.hash = this.seed.val();
+    window.location.hash = this.toHash(this.puzzle);
 
     $('.problem-count').text(this.puzzle.problems.length);
     this.render(this.puzzle);
@@ -14066,11 +14072,18 @@ var App = {
 };
 
 $(document).ready(function () {
-  App.init({
-    rows: Math.min(15, parseInt($(window).height() * 0.8 / 16 / 2.75)),
-    cols: Math.min(15, parseInt($(window).width() * 0.9 / 16 / 2.75)),
-    max: 15
-  });
+  var query = App.fromHash(window.location.hash.substring(1));
+  if (Object.keys(query).length > 0) {
+    App.init(query);
+  } else {
+    // auto generate everything
+    App.init({
+      rows: Math.min(15, parseInt($(window).height() * 0.8 / 16 / 2.75)),
+      cols: Math.min(15, parseInt($(window).width() * 0.9 / 16 / 2.75)),
+      max: 15,
+      seed: parseInt(Math.random() * 999)
+    });
+  }
 });
 
 window.App = App;
