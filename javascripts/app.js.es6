@@ -33,6 +33,10 @@ var App = {
     if (this.puzzle == undefined) {
       this.handleRandom();
     }
+
+    var hammer = new Hammer($('.puzzle')[0]);
+    hammer.get('pan').set({ direction: Hammer.DIRECTION_ALL });
+    hammer.on('pan', this.handleTouch.bind(this));
   },
 
   parseSeedFromLocation: function parseSeedFromLocation() {
@@ -41,6 +45,52 @@ var App = {
       this.seed.val(seed);
       this.handleGenerate();
     }
+  },
+
+  handleTouch: function handleTouch(e) {
+    function cellAt(point) {
+      return document.elementsFromPoint(point.x, point.y).filter(function (elm) {
+        return elm.className == 'cell';
+      })[0];
+    }
+
+    if (this.touchStart && !e.isFirst) {
+      this.touchEnd = cellAt(e.center);
+      this.renderSelection(this.touchStart, this.touchEnd);
+    } else {
+      this.touchStart = cellAt(e.center);
+      this.touchEnd = false;
+    }
+    if (e.isFinal && this.touchEnd) {
+      this.validateSelection(this.touchStart, this.touchEnd);
+      this.touchStart = false;
+    }
+  },
+
+  validateSelection: function validateSelection(startElm, endElm) {
+    console.log(startElm, endElm);
+
+    var valid = false;
+    this.puzzle.validateSelection(startElm.id, endElm.id, function (prob) {
+      valid = true;
+      $('.selection').addClass('found').removeClass('selection');
+    });
+    if (!valid) {
+      $('.selection').addClass('invalid');
+    }
+  },
+
+  renderSelection: function renderSelection(startElm, endElm) {
+    if (!startElm || !endElm) {
+      return;
+    }
+    // add oval if needed
+    var $selection = $('.selection').remove();
+    $selection = $('<div class="oval selection" />');
+    $('.solutions').append($selection);
+
+    $selection.data({ 'from': startElm.id, 'to': endElm.id });
+    Trig.alignOval($selection);
   },
 
   handleCheckSolution: function handleCheckSolution(e) {
@@ -84,7 +134,7 @@ var App = {
     if (this.checkSolution.prop('checked')) {
       this.renderSolutions();
     } else {
-      $('.solutions').empty();
+      $('.solution').remove();
     }
   },
 
@@ -113,76 +163,18 @@ var App = {
   },
 
   renderSolutions: function renderSolutions() {
-    function center(e) {
-      var offset = e.offset();
-      return {
-        x: offset.left + e.outerWidth() / 2,
-        y: offset.top + e.outerHeight() / 2
-      };
-    }
-
-    function midpoint(p1, p2) {
-      return {
-        x: (p2.x + p1.x) / 2,
-        y: (p2.y + p1.y) / 2
-      };
-    }
-
-    function rotate(elm, degrees) {
-      $(elm).css({
-        '-webkit-transform': 'rotate(' + degrees + 'deg)',
-        '-moz-transform': 'rotate(' + degrees + 'deg)',
-        '-ms-transform': 'rotate(' + degrees + 'deg)',
-        'transform': 'rotate(' + degrees + 'deg)'
-      });
-    }
-
-    function alignOval(oval) {
-      // element
-      var e1 = $('#' + oval.data('from')),
-          e2 = $('#' + oval.data('to')),
-          minDim = 0.6 * Math.min(e1.outerWidth(), e1.outerHeight(), e2.outerWidth(), e2.outerHeight()),
-
-      // centers
-      c1 = center(e1),
-          c2 = center(e2),
-
-      // midpoint
-      mid = midpoint(c2, c1),
-
-      // distance between center points
-      dx2 = Math.pow(c2.x - c1.x, 2),
-          dy2 = Math.pow(c2.y - c1.y, 2),
-          dist = Math.sqrt(dx2 + dy2);
-
-      // set oval dimensions
-      oval.height(minDim);
-      oval.width(dist + minDim);
-
-      // align center of oval with midpoint between elements
-      oval.offset({
-        left: mid.x - oval.outerWidth() / 2,
-        top: mid.y - oval.outerHeight() / 2
-      });
-
-      // angle between element centers
-      var deg = Math.atan2(c2.y - c1.y, c2.x - c1.x) * 180 / Math.PI;
-
-      rotate(oval, deg);
-    }
-
     var $solutions = $('.solutions');
-    $solutions.empty();
+    $solutions.find('.solution').remove();
     this.puzzle.problems.forEach(function (prob) {
       var origin = prob[0],
           last = prob[prob.length - 1],
-          $oval = $('<div />').addClass('oval').attr({
+          $oval = $('<div />').addClass('solution oval').attr({
         'data-from': origin.id(),
         'data-to': last.id()
       });
 
       $solutions.append($oval);
-      alignOval($oval);
+      Trig.alignOval($oval);
     });
   },
 
@@ -193,7 +185,7 @@ var App = {
     puzzle.forEach(function (row) {
       var tr = $('<tr/>');
       row.forEach(function (col) {
-        col.elm = $('<td id="' + col.id() + '" class="td--cell" />').append($('<div class="cell"/>').text(col.num));
+        col.elm = $('<td class="td--cell" />').append($('<div class="cell" id="' + col.id() + '" />').text(col.num));
         tr.append(col.elm);
       });
       $table.append(tr);
@@ -205,8 +197,8 @@ var App = {
 };
 
 App.init({
-  rows: 15,
-  cols: 15,
+  rows: 10,
+  cols: 10,
   max: 15
 });
 

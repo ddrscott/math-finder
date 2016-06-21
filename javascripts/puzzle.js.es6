@@ -79,6 +79,18 @@ var Puzzle = function Puzzle(options) {
     return false;
   }
 
+  this.validateSelection = function (startId, endId, matchCallback) {
+    this.problems.some(function (prob) {
+      var origin = prob[0],
+          last = prob[prob.length - 1];
+
+      if (origin.id() == startId && last.id() == endId || origin.id() == endId && last.id() == startId) {
+        matchCallback(prob);
+        return true;
+      }
+    });
+  };
+
   // public functions
   this.forEach = function (callback) {
     this.rows.forEach(callback);

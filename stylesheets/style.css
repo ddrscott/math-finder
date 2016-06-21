@@ -395,8 +395,7 @@ table {
   border-collapse: collapse;
   border: 2px solid black; }
 
-.match,
-.answer {
+.match {
   font-weight: bold;
   color: #6464ff;
   transition: none; }
@@ -444,7 +443,13 @@ table {
   position: relative;
   border: 0.15em solid rgba(100, 100, 255, 0.5);
   border-radius: 9em;
-  transition: none; }
+  transition: border; }
+  .oval.selection {
+    border-color: #3232c8; }
+  .oval.invalid {
+    border-color: #c83232; }
+  .oval.found {
+    border-color: #32c832; }
 
 .problem-count {
   font-size: 1.5em;
@@ -474,6 +479,20 @@ ol.problems li {
 @media print {
   .no-print {
     display: none; } }
+#debug {
+  font-family: monospace;
+  padding: 0.5em;
+  text-align: left;
+  font-size: .8em;
+  position: absolute;
+  word-break: breakall;
+  white-space: wrap;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 12em;
+  background: rgba(240, 240, 240, 0.9); }
+
 *,
 *:before,
 *:after {
