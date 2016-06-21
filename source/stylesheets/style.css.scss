@@ -40,7 +40,8 @@ table {
   border: 2px solid black;
 }
 
-.match {
+.match,
+.answer {
   font-weight: bold;
   color: rgba(100,100,255,1);
   transition: none;
