@@ -8,6 +8,7 @@ var App = {
   btnSolve: $('.solve'),
   btnRandom: $('.random'),
   btnNext: $('.next'),
+  remaining: $('.remaining'),
 
   init(opts) {
     var self = this;
@@ -77,14 +78,20 @@ var App = {
     var valid = false;
     this.puzzle.validateSelection(startElm.id, endElm.id, (prob) => {
       valid = true;
-      $('.selection')
-        .addClass('found')
-        .removeClass('selection');
+      prob.solved = true;
+      $('.selection').addClass('found').removeClass('selection');
+      this.renderRemaining();
     });
     if (!valid) {
-      $('.selection')
-        .addClass('invalid')
+      $('.selection').addClass('invalid')
     }
+  },
+
+  renderRemaining() {
+    const r = this.puzzle.remaining(),
+          plural = r == 1 ? ' problem' : ' problems';
+    $('.remaining-num').text(r);
+    $('.remaining-label').text(plural + ' left.');
   },
 
   renderSelection(startElm, endElm) {
@@ -147,7 +154,7 @@ var App = {
 
   renderHints(show) {
     this.puzzle.problems.forEach((prob) => {
-      var origin = prob[0];
+      var origin = prob.cells[0];
       if (show) {
         origin.elm.addClass('match')
       } else {
@@ -160,7 +167,7 @@ var App = {
     var $problems = $('.problems');
     $problems.empty();
     this.puzzle.problems.forEach((prob) => {
-      const copy = prob.slice(),
+      const copy = prob.cells.slice(),
         $answer = $('<span class="answer" />').text(copy.shift()),
         $parts = $('<span class="parts" />').text(copy.reverse().join(" + ")),
         $li = $('<li class="problem" />').append($parts).append(" = ").append($answer);
@@ -173,14 +180,11 @@ var App = {
     var $solutions = $('.solutions');
     $solutions.find('.solution').remove();
     this.puzzle.problems.forEach((prob) => {
-      var origin = prob[0],
-        last = prob[prob.length - 1],
+      var origin = prob.origin,
+        last = prob.last,
         $oval = $('<div />')
           .addClass('solution oval')
-          .attr({
-        'data-from': origin.id(),
-        'data-to': last.id()
-      });
+          .attr({'data-from': origin.id(), 'data-to': last.id()});
 
       $solutions.append($oval);
       Trig.alignOval($oval);
@@ -205,6 +209,7 @@ var App = {
       .append($('<div class="solutions" />'))
       .append($table);
     this.renderProblems();
+    this.renderRemaining();
   },
 }
 

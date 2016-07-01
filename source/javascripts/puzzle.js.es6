@@ -40,12 +40,20 @@ var Puzzle = function(options) {
         dirs.forEach((dir) => {
           origin.matches = findMatches(rows, origin, dir);
           if (origin.matches) {
-            problems.push([origin, ...origin.matches]);
+            var cells = [origin, ...origin.matches];
+            problems.push({
+              cells: cells,
+              origin: origin,
+              sort: cells.length * 1000 + origin.num,
+              last: cells[cells.length - 1],
+              length: cells.length,
+              solved: false
+            });
           }
         });
       });
     });
-    return problems.sort((a,b) => (a.length * 1000 + a[0].num) - (b.length * 1000 + b[0].num));
+    return problems.sort((a,b) => a.sort - b.sort);
   }
 
   /**
@@ -76,10 +84,8 @@ var Puzzle = function(options) {
 
   this.validateSelection = function(startId, endId, matchCallback) {
     this.problems.some((prob) => {
-      var origin = prob[0],
-        last = prob[prob.length - 1];
-
-      if ((origin.id() == startId && last.id() == endId) || 
+      const {origin,last} = prob;
+      if ((origin.id() == startId && last.id() == endId) ||
           (origin.id() == endId && last.id() == startId)) {
         matchCallback(prob);
         return true;
@@ -87,6 +93,11 @@ var Puzzle = function(options) {
     });
   };
 
+  this.remaining = function() {
+    return this.problems.reduce((sum, prob) => {
+      return prob.solved ? sum - 1 : sum
+    }, this.problems.length);
+  };
 
   // public functions
   this.forEach = function(callback) {

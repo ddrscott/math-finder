@@ -42,9 +42,11 @@ table {
 }
 
 .match,
-.answer {
+.answer,
+.remaining-num {
   font-weight: bold;
   color: rgba(100,100,255,1);
+  font-family: monospace;
   transition: none;
 }
 
@@ -100,7 +102,8 @@ table {
   }
 }
 
-.problem-count {
+.problem-count,
+.remaining-num {
   font-size: 1.5em;
   font-family: monospace;
   font-weight: bold;
