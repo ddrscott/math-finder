@@ -13809,13 +13809,21 @@ var Puzzle = function Puzzle(options) {
         dirs.forEach(function (dir) {
           origin.matches = findMatches(rows, origin, dir);
           if (origin.matches) {
-            problems.push([origin].concat(_toConsumableArray(origin.matches)));
+            var cells = [origin].concat(_toConsumableArray(origin.matches));
+            problems.push({
+              cells: cells,
+              origin: origin,
+              sort: cells.length * 1000 + origin.num,
+              last: cells[cells.length - 1],
+              length: cells.length,
+              solved: false
+            });
           }
         });
       });
     });
     return problems.sort(function (a, b) {
-      return a.length * 1000 + a[0].num - (b.length * 1000 + b[0].num);
+      return a.sort - b.sort;
     });
   }
 
@@ -13847,14 +13855,20 @@ var Puzzle = function Puzzle(options) {
 
   this.validateSelection = function (startId, endId, matchCallback) {
     this.problems.some(function (prob) {
-      var origin = prob[0],
-          last = prob[prob.length - 1];
+      var origin = prob.origin;
+      var last = prob.last;
 
       if (origin.id() == startId && last.id() == endId || origin.id() == endId && last.id() == startId) {
         matchCallback(prob);
         return true;
       }
     });
+  };
+
+  this.remaining = function () {
+    return this.problems.reduce(function (sum, prob) {
+      return prob.solved ? sum - 1 : sum;
+    }, this.problems.length);
   };
 
   // public functions
@@ -13876,6 +13890,7 @@ var App = {
   btnSolve: $('.solve'),
   btnRandom: $('.random'),
   btnNext: $('.next'),
+  remaining: $('.remaining'),
 
   init: function init(opts) {
     var _this = this;
@@ -13901,8 +13916,9 @@ var App = {
     this.handleGenerate();
 
     var hammer = new Hammer($('.puzzle')[0]);
-    hammer.get('pan').set({ direction: Hammer.DIRECTION_ALL });
+    hammer.get('pan').set({ direction: Hammer.DIRECTION_ALL, threshold: 1 });
     hammer.on('pan', this.handleTouch.bind(this));
+    hammer.on('panstart', this.handleTouchStart.bind(this));
   },
 
   fromHash: function fromHash(hash) {
@@ -13922,19 +13938,21 @@ var App = {
     return "rows=" + puzzle.numRows + "," + "cols=" + puzzle.numCols + "," + "max=" + puzzle.maxNum + "," + "seed=" + puzzle.seed;
   },
 
-  handleTouch: function handleTouch(e) {
-    function cellAt(point) {
-      return document.elementsFromPoint(point.x, point.y).filter(function (elm) {
-        return elm.className == 'cell';
-      })[0];
-    }
+  cellAt: function cellAt(point) {
+    return document.elementsFromPoint(point.x, point.y).filter(function (elm) {
+      return elm.className == 'cell';
+    })[0];
+  },
 
-    if (this.touchStart && !e.isFirst) {
-      this.touchEnd = cellAt(e.center);
+  handleTouchStart: function handleTouchStart(e) {
+    this.touchStart = this.cellAt(e.center);
+    this.touchEnd = false;
+  },
+
+  handleTouch: function handleTouch(e) {
+    if (this.touchStart) {
+      this.touchEnd = this.cellAt(e.center);
       this.renderSelection(this.touchStart, this.touchEnd);
-    } else {
-      this.touchStart = cellAt(e.center);
-      this.touchEnd = false;
     }
     if (e.isFinal && this.touchEnd) {
       this.validateSelection(this.touchStart, this.touchEnd);
@@ -13943,16 +13961,27 @@ var App = {
   },
 
   validateSelection: function validateSelection(startElm, endElm) {
+    var _this2 = this;
+
     console.log(startElm, endElm);
 
     var valid = false;
     this.puzzle.validateSelection(startElm.id, endElm.id, function (prob) {
       valid = true;
+      prob.solved = true;
       $('.selection').addClass('found').removeClass('selection');
+      _this2.renderRemaining();
     });
     if (!valid) {
       $('.selection').addClass('invalid');
     }
+  },
+
+  renderRemaining: function renderRemaining() {
+    var r = this.puzzle.remaining(),
+        plural = r == 1 ? ' problem' : ' problems';
+    $('.remaining-num').text(r);
+    $('.remaining-label').text(plural + ' left.');
   },
 
   renderSelection: function renderSelection(startElm, endElm) {
@@ -14015,7 +14044,7 @@ var App = {
 
   renderHints: function renderHints(show) {
     this.puzzle.problems.forEach(function (prob) {
-      var origin = prob[0];
+      var origin = prob.cells[0];
       if (show) {
         origin.elm.addClass('match');
       } else {
@@ -14028,7 +14057,7 @@ var App = {
     var $problems = $('.problems');
     $problems.empty();
     this.puzzle.problems.forEach(function (prob) {
-      var copy = prob.slice(),
+      var copy = prob.cells.slice(),
           $answer = $('<span class="answer" />').text(copy.shift()),
           $parts = $('<span class="parts" />').text(copy.reverse().join(" + ")),
           $li = $('<li class="problem" />').append($parts).append(" = ").append($answer);
@@ -14041,12 +14070,9 @@ var App = {
     var $solutions = $('.solutions');
     $solutions.find('.solution').remove();
     this.puzzle.problems.forEach(function (prob) {
-      var origin = prob[0],
-          last = prob[prob.length - 1],
-          $oval = $('<div />').addClass('solution oval').attr({
-        'data-from': origin.id(),
-        'data-to': last.id()
-      });
+      var origin = prob.origin,
+          last = prob.last,
+          $oval = $('<div />').addClass('solution oval').attr({ 'data-from': origin.id(), 'data-to': last.id() });
 
       $solutions.append($oval);
       Trig.alignOval($oval);
@@ -14068,6 +14094,7 @@ var App = {
     $puzzle.empty();
     $puzzle.append($('<div class="solutions" />')).append($table);
     this.renderProblems();
+    this.renderRemaining();
   }
 };
 

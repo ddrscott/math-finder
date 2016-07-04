@@ -43,13 +43,21 @@ var Puzzle = function Puzzle(options) {
         dirs.forEach(function (dir) {
           origin.matches = findMatches(rows, origin, dir);
           if (origin.matches) {
-            problems.push([origin].concat(_toConsumableArray(origin.matches)));
+            var cells = [origin].concat(_toConsumableArray(origin.matches));
+            problems.push({
+              cells: cells,
+              origin: origin,
+              sort: cells.length * 1000 + origin.num,
+              last: cells[cells.length - 1],
+              length: cells.length,
+              solved: false
+            });
           }
         });
       });
     });
     return problems.sort(function (a, b) {
-      return a.length * 1000 + a[0].num - (b.length * 1000 + b[0].num);
+      return a.sort - b.sort;
     });
   }
 
@@ -81,14 +89,20 @@ var Puzzle = function Puzzle(options) {
 
   this.validateSelection = function (startId, endId, matchCallback) {
     this.problems.some(function (prob) {
-      var origin = prob[0],
-          last = prob[prob.length - 1];
+      var origin = prob.origin;
+      var last = prob.last;
 
       if (origin.id() == startId && last.id() == endId || origin.id() == endId && last.id() == startId) {
         matchCallback(prob);
         return true;
       }
     });
+  };
+
+  this.remaining = function () {
+    return this.problems.reduce(function (sum, prob) {
+      return prob.solved ? sum - 1 : sum;
+    }, this.problems.length);
   };
 
   // public functions

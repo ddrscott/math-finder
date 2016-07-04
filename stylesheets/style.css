@@ -397,9 +397,11 @@ table {
   border: 2px solid black; }
 
 .match,
-.answer {
+.answer,
+.remaining-num {
   font-weight: bold;
   color: #6464ff;
+  font-family: monospace;
   transition: none; }
 
 .puzzle {
@@ -454,7 +456,8 @@ table {
   .oval.found {
     border-color: #32c832; }
 
-.problem-count {
+.problem-count,
+.remaining-num {
   font-size: 1.5em;
   font-family: monospace;
   font-weight: bold; }
@@ -478,6 +481,12 @@ ol.problems {
 
 ol.problems li {
   margin: 0 auto; }
+
+.social-icon-list a:hover {
+  opacity: 0.6; }
+
+.social-icon-list a {
+  opacity: 0.3; }
 
 @media print {
   .no-print {
