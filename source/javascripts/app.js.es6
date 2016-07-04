@@ -30,8 +30,9 @@ var App = {
     this.handleGenerate();
 
     var hammer = new Hammer($('.puzzle')[0]);
-    hammer.get('pan').set({ direction: Hammer.DIRECTION_ALL });
+    hammer.get('pan').set({ direction: Hammer.DIRECTION_ALL, threshold: 1 });
     hammer.on('pan', this.handleTouch.bind(this));
+    hammer.on('panstart', this.handleTouchStart.bind(this));
   },
 
   fromHash(hash) {
@@ -54,17 +55,20 @@ var App = {
       "seed=" + puzzle.seed
   },
 
-  handleTouch(e) {
-    function cellAt(point) {
-      return document.elementsFromPoint(point.x, point.y).filter(function(elm){ return elm.className == 'cell' })[0];
-    }
 
-    if (this.touchStart && !e.isFirst) {
-      this.touchEnd = cellAt(e.center);
+  cellAt(point) {
+    return document.elementsFromPoint(point.x, point.y).filter(function(elm){ return elm.className == 'cell' })[0];
+  },
+
+  handleTouchStart(e) {
+    this.touchStart = this.cellAt(e.center);
+    this.touchEnd = false;
+  },
+
+  handleTouch(e) {
+    if (this.touchStart) {
+      this.touchEnd = this.cellAt(e.center);
       this.renderSelection(this.touchStart, this.touchEnd);
-    } else {
-      this.touchStart = cellAt(e.center);
-      this.touchEnd = false;
     }
     if (e.isFinal && this.touchEnd) {
       this.validateSelection(this.touchStart, this.touchEnd);
