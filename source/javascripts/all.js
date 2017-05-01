@@ -5,4 +5,5 @@
 //= require cell
 //= require trig
 //= require puzzle
+//= require elements_from_point
 //= require app
