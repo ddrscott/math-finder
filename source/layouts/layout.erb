@@ -19,12 +19,14 @@
 
   <body class="<%= page_classes %>">
     <%= yield %>
-    <section>
-    <div class="social-icon-list">
-      <a href="https://twitter.com/@_ddrscott_"><img src="images/glyphicons_social_31_twitter.png"/></a>
-      <a href="https://github.com/ddrscott/math-finder"><img src="images/glyphicons_social_21_github.png"/></a>
-    </div>
+    <section class="no-print">
+      <div class="social-icon-list">
+        <a href="https://twitter.com/@_ddrscott_"><img src="images/glyphicons_social_31_twitter.png"/></a>
+        <a href="https://github.com/ddrscott/math-finder"><img src="images/glyphicons_social_21_github.png"/></a>
+      </div>
     </section>
+    <%# hack so no input get default focus http://stackoverflow.com/a/20735034/613772 %>
+    <input type="text" autofocus="true" style="display:none"/>
     <%= javascript_include_tag :all %>
     <%= javascript_include_tag :ga %>
   </body>
