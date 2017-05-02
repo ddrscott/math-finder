@@ -83,14 +83,24 @@ var Puzzle = function(options) {
   }
 
   this.validateSelection = function(startId, endId, matchCallback) {
+    var track = {
+      hitType: 'event',
+      eventCategory: 'selection',
+      eventAction: 'wrong',
+      eventLabel: this.numRows + 'x' + this.numCols + ':' + this.minMax + '..' + this.maxNum
+    };
     this.problems.some((prob) => {
       const {origin,last} = prob;
       if ((origin.id() == startId && last.id() == endId) ||
           (origin.id() == endId && last.id() == startId)) {
         matchCallback(prob);
+        track.eventAction = 'right';
         return true;
       }
     });
+    if (ga) {
+      ga('send', track);
+    }
   };
 
   this.remaining = function() {
