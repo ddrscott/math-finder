@@ -13764,7 +13764,7 @@ var Trig = {
   }
 };
 window.Trig = Trig;
-"use strict";
+'use strict';
 
 function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) arr2[i] = arr[i]; return arr2; } else { return Array.from(arr); } }
 
@@ -13854,15 +13854,25 @@ var Puzzle = function Puzzle(options) {
   }
 
   this.validateSelection = function (startId, endId, matchCallback) {
+    var track = {
+      hitType: 'event',
+      eventCategory: 'selection',
+      eventAction: 'wrong',
+      eventLabel: this.numRows + 'x' + this.numCols + ':' + this.minMax + '..' + this.maxNum
+    };
     this.problems.some(function (prob) {
       var origin = prob.origin;
       var last = prob.last;
 
       if (origin.id() == startId && last.id() == endId || origin.id() == endId && last.id() == startId) {
         matchCallback(prob);
+        track.eventAction = 'right';
         return true;
       }
     });
+    if (ga) {
+      ga('send', track);
+    }
   };
 
   this.remaining = function () {
