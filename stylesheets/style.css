@@ -475,12 +475,14 @@ table {
   color: black; }
 
 ol.problems {
-  display: inline-block;
   list-style: none;
   padding: 0; }
 
 ol.problems li {
   margin: 0 auto; }
+
+.social-icon-list {
+  margin-top: 10%; }
 
 .social-icon-list a:hover {
   opacity: 0.6; }

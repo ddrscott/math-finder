@@ -13678,7 +13678,7 @@ var Random = {
   int: function int(min, max) {
     this.seed = (this.seed * 9301 + 49297) % 233280;
     var rnd = this.seed / 233280;
-    return parseInt(min + rnd * (max - min));
+    return parseInt(min + rnd * (max - min + 1));
   }
 };
 
@@ -13878,6 +13878,31 @@ var Puzzle = function Puzzle(options) {
 };
 
 window.Puzzle = Puzzle;
+'use strict';
+// https://gist.github.com/iddan/54d5d9e58311b0495a91bf06de661380
+
+if (!document.elementsFromPoint) {
+    document.elementsFromPoint = elementsFromPoint;
+}
+
+function elementsFromPoint(x, y) {
+    var parents = [];
+    var parent = void 0;
+    do {
+        if (parent !== document.elementFromPoint(x, y)) {
+            parent = document.elementFromPoint(x, y);
+            parents.push(parent);
+            parent.style.pointerEvents = 'none';
+        } else {
+            parent = false;
+        }
+    } while (parent);
+    parents.forEach(function (parent) {
+        return parent.style.pointerEvents = 'all';
+    });
+    return parents;
+}
+;
 'use strict';
 
 var App = {
@@ -14114,6 +14139,7 @@ $(document).ready(function () {
 });
 
 window.App = App;
+
 
 
 
