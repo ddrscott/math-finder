@@ -146,7 +146,8 @@ ol.problems li {
 
 
 @media print {
-  .no-print {
+  .no-print,
+  .google-auto-placed {
     display: none;
   }
 }
