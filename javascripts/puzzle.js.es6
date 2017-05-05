@@ -104,7 +104,7 @@ var Puzzle = function Puzzle(options) {
         return true;
       }
     });
-    if (ga) {
+    if (typeof ga !== 'undefined') {
       ga('send', track);
     }
   };

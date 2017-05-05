@@ -491,7 +491,8 @@ ol.problems li {
   opacity: 0.3; }
 
 @media print {
-  .no-print {
+  .no-print,
+  .google-auto-placed {
     display: none; } }
 #debug {
   font-family: monospace;
