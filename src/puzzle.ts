@@ -1,4 +1,7 @@
-var Puzzle = function(options) {
+import Random from './random';
+import Cell from './cell';
+
+export default Puzzle = function(options) {
   this.numRows = parseInt(options.rows || 3);
   this.numCols = parseInt(options.cols || 3);
   this.minNum  = parseInt(options.min  || 1);
@@ -98,8 +101,8 @@ var Puzzle = function(options) {
         return true;
       }
     });
-    if (ga) {
-      ga('send', track);
+    if (window.ga) {
+      window.ga('send', track);
     }
   };
 
@@ -114,5 +117,3 @@ var Puzzle = function(options) {
     this.rows.forEach(callback);
   };
 };
-
-window.Puzzle = Puzzle;

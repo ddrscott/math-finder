@@ -1,4 +1,6 @@
-var Trig = {
+import jQuery from 'jquery';
+
+export default Trig = {
   center(e) {
     var offset = e.offset();
     return {
@@ -15,7 +17,7 @@ var Trig = {
   },
 
   rotate(elm, degrees) {
-    $(elm).css({
+    jQuery(elm).css({
       '-webkit-transform': 'rotate(' + degrees + 'deg)',
       '-moz-transform': 'rotate(' + degrees + 'deg)',
       '-ms-transform': 'rotate(' + degrees + 'deg)',
@@ -25,8 +27,8 @@ var Trig = {
 
   alignOval(oval) {
     // element
-    var e1 = $('#' + oval.data('from')),
-      e2 = $('#' + oval.data('to')),
+    var e1 = jQuery('#' + oval.data('from')),
+      e2 = jQuery('#' + oval.data('to')),
 
       minDim = 0.6 * Math.min(e1.outerWidth(), e1.outerHeight(), e2.outerWidth(), e2.outerHeight()),
 
@@ -58,4 +60,3 @@ var Trig = {
     this.rotate(oval, deg);
   }
 }
-window.Trig = Trig;

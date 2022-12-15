@@ -1,14 +1,22 @@
-var App = {
-  rows: $('input[name="rows"]'),
-  cols: $('input[name="cols"]'),
-  seed: $('input[name="seed"]'),
-  checkSolution: $('input[name="show-solution"]'),
-  checkHint: $('input[name="show-hint"]'),
-  btnResize: $('.resize'),
-  btnSolve: $('.solve'),
-  btnRandom: $('.random'),
-  btnNext: $('.next'),
-  remaining: $('.remaining'),
+import jQuery from 'jquery';
+import Hammer from './vendor/hammer';
+import * as hammertime from './vendor/hammer-timejs.min';
+import Trig from './trig';
+import Puzzle from './puzzle';
+//= require app
+
+const AppFactory = () => {
+    return {
+  rows: jQuery('input[name="rows"]'),
+  cols: jQuery('input[name="cols"]'),
+  seed: jQuery('input[name="seed"]'),
+  checkSolution: jQuery('input[name="show-solution"]'),
+  checkHint: jQuery('input[name="show-hint"]'),
+  btnResize: jQuery('.resize'),
+  btnSolve: jQuery('.solve'),
+  btnRandom: jQuery('.random'),
+  btnNext: jQuery('.next'),
+  remaining: jQuery('.remaining'),
 
   init(opts) {
     var self = this;
@@ -29,7 +37,7 @@ var App = {
 
     this.handleGenerate();
 
-    var hammer = new Hammer($('.puzzle')[0]);
+    var hammer = new Hammer(jQuery('.puzzle')[0]);
     hammer.get('pan').set({ direction: Hammer.DIRECTION_ALL, threshold: 1 });
     hammer.on('pan', this.handleTouch.bind(this));
     hammer.on('panstart', this.handleTouchStart.bind(this));
@@ -83,19 +91,19 @@ var App = {
     this.puzzle.validateSelection(startElm.id, endElm.id, (prob) => {
       valid = true;
       prob.solved = true;
-      $('.selection').addClass('found').removeClass('selection');
+      jQuery('.selection').addClass('found').removeClass('selection');
       this.renderRemaining();
     });
     if (!valid) {
-      $('.selection').addClass('invalid')
+      jQuery('.selection').addClass('invalid')
     }
   },
 
   renderRemaining() {
     const r = this.puzzle.remaining(),
           plural = r == 1 ? ' problem' : ' problems';
-    $('.remaining-num').text(r);
-    $('.remaining-label').text(plural + ' left.');
+    jQuery('.remaining-num').text(r);
+    jQuery('.remaining-label').text(plural + ' left.');
   },
 
   renderSelection(startElm, endElm) {
@@ -103,9 +111,9 @@ var App = {
       return;
     }
     // add oval if needed
-    var $selection = $('.selection').remove();
-    $selection = $('<div class="oval selection" />');
-    $('.solutions').append($selection);
+    var $selection = jQuery('.selection').remove();
+    $selection = jQuery('<div class="oval selection" />');
+    jQuery('.solutions').append($selection);
 
     $selection.data({'from': startElm.id, 'to': endElm.id});
     Trig.alignOval($selection);
@@ -126,7 +134,7 @@ var App = {
 
     window.location.hash = this.toHash(this.puzzle);
 
-    $('.problem-count').text(this.puzzle.problems.length);
+    jQuery('.problem-count').text(this.puzzle.problems.length);
     this.render(this.puzzle);
 
     this.renderHints(this.checkHint.prop('checked'));
@@ -152,7 +160,7 @@ var App = {
     if (this.checkSolution.prop('checked')) {
       this.renderSolutions();
     } else {
-      $('.solution').remove();
+      jQuery('.solution').remove();
     }
   },
 
@@ -168,25 +176,25 @@ var App = {
   },
 
   renderProblems() {
-    var $problems = $('.problems');
+    var $problems = jQuery('.problems');
     $problems.empty();
     this.puzzle.problems.forEach((prob) => {
       const copy = prob.cells.slice(),
-        $answer = $('<span class="answer" />').text(copy.shift()),
-        $parts = $('<span class="parts" />').text(copy.reverse().join(" + ")),
-        $li = $('<li class="problem" />').append($parts).append(" = ").append($answer);
+        $answer = jQuery('<span class="answer" />').text(copy.shift()),
+        $parts = jQuery('<span class="parts" />').text(copy.reverse().join(" + ")),
+        $li = jQuery('<li class="problem" />').append($parts).append(" = ").append($answer);
 
       $problems.append($li);
     });
   },
 
   renderSolutions() {
-    var $solutions = $('.solutions');
+    var $solutions = jQuery('.solutions');
     $solutions.find('.solution').remove();
     this.puzzle.problems.forEach((prob) => {
       var origin = prob.origin,
         last = prob.last,
-        $oval = $('<div />')
+        $oval = jQuery('<div />')
           .addClass('solution oval')
           .attr({'data-from': origin.id(), 'data-to': last.id()});
 
@@ -196,40 +204,40 @@ var App = {
   },
 
   render(puzzle) {
-    const $puzzle = $('.puzzle'),
-      $table = $('<table />');
+    const $puzzle = jQuery('.puzzle'),
+      $table = jQuery('<table />');
 
     puzzle.forEach(row => {
-      var tr = $('<tr/>');
+      var tr = jQuery('<tr/>');
       row.forEach(col => {
-        col.elm = $('<td class="td--cell" />')
-          .append($('<div class="cell" id="' + col.id() + '" />').text(col.num));
+        col.elm = jQuery('<td class="td--cell" />')
+          .append(jQuery('<div class="cell" id="' + col.id() + '" />').text(col.num));
         tr.append(col.elm);
       });
       $table.append(tr);
     });
     $puzzle.empty();
     $puzzle
-      .append($('<div class="solutions" />'))
+      .append(jQuery('<div class="solutions" />'))
       .append($table);
     this.renderProblems();
     this.renderRemaining();
   },
 }
+}
 
-$(document).ready(() => {
-  var query = App.fromHash(window.location.hash.substring(1));
-  if (Object.keys(query).length > 0) {
-    App.init(query);
-  } else {
-    // auto generate everything
-    App.init({
-      rows: Math.min(15, parseInt($(window).height() * 0.8 / 16 / 2.75)),
-      cols: Math.min(15, parseInt($(window).width() * 0.9 / 16 / 2.75)),
-      max: 15,
-      seed: parseInt(Math.random() * 999)
-    });
-  }
+jQuery(document).ready(() => {
+    const App = AppFactory();
+    var query = App.fromHash(window.location.hash.substring(1));
+    if (Object.keys(query).length > 0) {
+        App.init(query);
+    } else {
+        // auto generate everything
+        App.init({
+            rows: Math.min(15, parseInt(jQuery(window).height() * 0.8 / 16 / 2.75)),
+            cols: Math.min(15, parseInt(jQuery(window).width() * 0.9 / 16 / 2.75)),
+            max: 15,
+            seed: parseInt(Math.random() * 999)
+        });
+    }
 });
-
-window.App = App;

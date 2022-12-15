@@ -1,4 +1,4 @@
-var Random = {
+export default Random = {
   seed: 0,
 
   int(min, max) {
@@ -7,5 +7,3 @@ var Random = {
     return parseInt(min + rnd * (max - min + 1));
   }
 }
-
-window.Random = Random;
