@@ -47,11 +47,14 @@ table {
   transition: none;
 }
 
+.puzzle-container {
+  margin: 2em auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 .puzzle {
-  display: inline-block;
-  margin: 2em auto 1em;
-  max-width: 100%;
-  overflow: auto;
   /*disable selection for now*/
   -moz-user-select: none; -webkit-user-select: none; -ms-user-select:none; user-select:none;-o-user-select:none;
   position: relative;
