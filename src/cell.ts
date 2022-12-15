@@ -1,4 +1,6 @@
-var Cell = function(row, col, min, max) {
+import Random from './random';
+
+export default Cell = function(row, col, min, max) {
   var self = this;
 
   this.row = row;
@@ -14,4 +16,3 @@ var Cell = function(row, col, min, max) {
 Cell.prototype.toString = function() {
   return this.num.toString();
 }
-window.Cell = Cell;

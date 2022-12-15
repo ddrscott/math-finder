@@ -1,6 +1,3 @@
-@charset "utf-8";
-@import "normalize";
-
 body {
   margin: 0 auto;
   text-align: center;
@@ -55,7 +52,7 @@ table {
   margin: 2em auto 1em;
   max-width: 100%;
   overflow: auto;
-  // disable selection for now
+  /*disable selection for now*/
   -moz-user-select: none; -webkit-user-select: none; -ms-user-select:none; user-select:none;-o-user-select:none;
   position: relative;
 }
@@ -88,18 +85,19 @@ table {
   border: .15em solid rgba(100,100,255,.5);
   border-radius: 9em;
   transition: border;
+}
 
-  &.selection {
+
+.oval.selection {
     border-color: rgba(50,50,200,1);
-  }
+}
 
-  &.invalid {
+.oval.invalid {
     border-color: rgba(200,50,50,1);
-  }
+}
 
-  &.found {
+.oval.found {
     border-color: rgba(50,200,50,1);
-  }
 }
 
 .problem-count,
@@ -167,6 +165,5 @@ ol.problems li {
 *,
 *:before,
 *:after {
-    transition: all 0.3s ease;
     box-sizing: border-box;
 }

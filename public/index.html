@@ -12,7 +12,10 @@
     <meta property="og:image"              content="https://ddrscott.github.io/math-finder/images/example.png" />
 
     <!-- Use title if it's in the page YAML frontmatter -->
-    <title><%= current_page.data.title || "Math Finder" %></title>
+    <title>Math Finder</title>
+
+    <link rel="stylesheet" href="styles/_normalize.css">
+    <link rel="stylesheet" href="styles/style.css">
 
     <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
     <script>
@@ -21,20 +24,45 @@
   enable_page_level_ads: true
 });
     </script>
-    <%= stylesheet_link_tag :style %>
   </head>
 
   <body class="<%= page_classes %>">
-    <%= yield %>
+<h1>Math Finder <img src='images/example.png' width=88 height=38 class='no-print' alt='example' /> </h1>
+Print for your kids.
+Get a pen[cil].
+Step away from the computer.
+Circle the problems.
+Share with your friends.
+<span class='problem-count'>?</span> addition problems. Can you find them all? <span class="remaining-num"></span><span class="remaining-label"></span>
+<section>
+  <div class="puzzle">Loading...</div>
+</section>
+<section>
+  <label>Rows: <input type='text' name='rows' /></label>
+  <label>Columns: <input type='text' name='cols' /></label>
+  <label>Puzzle #<input type='text' name='seed' /></label>
+</section>
+<section class="no-print">
+  <button class='resize'>Generate/Reset</button>
+  <button class='next'>Next</button>
+  <button class='random'>Random</button>
+</section>
+<section class="no-print">
+  <label><input type=checkbox name='show-hint'/> Show Hints</label>
+  <label><input type=checkbox name='show-solution'/> Show Matches</label>
+</section>
+<section class="no-print">
+  <h2>Problems to find</h2>
+  <ol class="problems"></ol>
+</section>
     <section class="no-print">
       <div class="social-icon-list">
         <a href="https://twitter.com/@_ddrscott_"><img src="images/glyphicons_social_31_twitter.png"/></a>
         <a href="https://github.com/ddrscott/math-finder"><img src="images/glyphicons_social_21_github.png"/></a>
       </div>
     </section>
-    <%# hack so no input get default focus http://stackoverflow.com/a/20735034/613772 %>
+    <!-- hack so no input get default focus http://stackoverflow.com/a/20735034/613772 -->
     <input type="text" autofocus="true" style="display:none"/>
-    <%= javascript_include_tag :all %>
-    <%= javascript_include_tag :ga %>
+    <script async src="./index.js"></script>
   </body>
 </html>

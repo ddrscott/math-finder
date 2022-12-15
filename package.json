@@ -1,0 +1,19 @@
+{
+    "name": "math-finder",
+    "version": "0.0.1",
+    "description": "Find the bonds for fun and fun",
+    "main": "index.js",
+    "repository": "https://github.com/ddrscott/math-finder",
+    "author": "Scott Pierce <ddrscott@gmail.com>",
+    "license": "MIT",
+    "scripts": {
+        "watch": "./node_modules/.bin/esbuild --bundle src/index.ts --outdir=public --minify --sourcemap --watch"
+    },
+    "devDependencies": {
+        "esbuild": "^0.16.7",
+        "eslint": "^8.29.0"
+    },
+    "dependencies": {
+        "jquery": "^3.6.2"
+    }
+}
