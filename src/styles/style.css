@@ -1,0 +1,172 @@
+body {
+  margin: 0 auto;
+  text-align: center;
+  padding: 5%;
+  width: 100%;
+  max-width: 768px;
+}
+
+section {
+  clear: both;
+}
+
+section + section {
+  margin-top: 1em;
+}
+
+label {
+  white-space: nowrap;
+  margin: 0 .5em;
+}
+
+input {
+  max-width: 2em;
+  text-align: center;
+}
+
+h1,
+h1 img {
+  vertical-align: bottom;
+}
+
+h2 {
+  margin-bottom: 0;
+}
+
+table {
+  border-collapse: collapse;
+  border: 2px solid black;
+}
+
+.match,
+.answer,
+.remaining-num {
+  font-weight: bold;
+  color: rgba(100,100,255,1);
+  font-family: monospace;
+  transition: none;
+}
+
+.puzzle-container {
+  margin: 2em auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.puzzle {
+  /*disable selection for now*/
+  -moz-user-select: none; -webkit-user-select: none; -ms-user-select:none; user-select:none;-o-user-select:none;
+  position: relative;
+}
+
+.solutions {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  overflow: hidden;
+}
+
+.td--cell {
+  border: 1px solid #ccc;
+  margin: 0;
+  padding: 0;
+}
+
+.cell {
+  font-size: 1.1em;
+  font-family: monospace;
+  width: 2.75em;
+  height: 2.75em;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.oval {
+  position: relative;
+  border: .15em solid rgba(100,100,255,.5);
+  border-radius: 9em;
+  transition: border;
+}
+
+
+.oval.selection {
+    border-color: rgba(50,50,200,1);
+}
+
+.oval.invalid {
+    border-color: rgba(200,50,50,1);
+}
+
+.oval.found {
+    border-color: rgba(50,200,50,1);
+}
+
+.problem-count,
+.remaining-num {
+  font-size: 1.5em;
+  font-family: monospace;
+  font-weight: bold;
+}
+
+.problems {
+  width: 100%;
+  -moz-column-width: 9em;
+  -moz-columns: 9em;
+  -webkit-columns: 9em;
+  columns: 9em;
+}
+
+.problem {
+  font-family: monospace;
+  text-align: center;
+  color: black;
+}
+
+ol.problems {
+  list-style: none;
+  padding: 0;
+}
+
+ol.problems li {
+  margin: 0 auto;
+}
+
+.social-icon-list {
+  margin-top: 10%
+}
+
+.social-icon-list a:hover {
+  opacity: 0.6;
+}
+
+.social-icon-list a {
+  opacity: 0.3;
+}
+
+
+@media print {
+  .no-print,
+  .google-auto-placed {
+    display: none;
+  }
+}
+
+#debug {
+  font-family: monospace;
+  padding: 0.5em;
+  text-align: left; 
+  font-size: .8em;
+  position: absolute;
+  word-break: breakall;
+  white-space: wrap;
+  top:0; left: 0; right: 0; height: 12em;
+  background: rgba(240,240,240,0.9);
+}
+
+*,
+*:before,
+*:after {
+    box-sizing: border-box;
+}

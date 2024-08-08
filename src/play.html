@@ -1,0 +1,73 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta content="IE=edge" http-equiv="X-UA-Compatible">
+    <meta charset="utf-8">
+    <meta content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"
+        name="viewport">
+    <meta name="msapplication-tap-highlight" content="no" />
+    <meta property="og:url" content="https://ddrscott.github.io/math-finder/" />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="Math Finder" />
+    <meta property="og:description" content="Make your kids smarter than mine" />
+    <meta property="og:image" content="https://ddrscott.github.io/math-finder/images/screen.png" />
+
+    <!-- Use title if it's in the page YAML frontmatter -->
+    <title>Math Finder</title>
+
+    <link rel="stylesheet" href="./index.css">
+    <link rel="stylesheet" href="../public/styles/_normalize.css">
+    <link rel="stylesheet" href="../public/styles/style.css">
+
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-8547687546592989",
+            enable_page_level_ads: true
+        });
+    </script>
+</head>
+
+<body class="<%= page_classes %>">
+    <h1>Math Finder <img src='../public/images/example.png' width=88 height=38 class='no-print' alt='example' /> </h1>
+    <div class="no-print">Use mouse or finger to mark the findings <b>or</b> print for your kids and get away from the
+        computer.</div>
+    Share with your friends.
+    <span class='problem-count'>?</span> addition problems. Can you find them all? <span
+        class="remaining-num"></span><span class="remaining-label"></span>
+    <section class='puzzle-container'>
+        <div class="puzzle">Loading...</div>
+    </section>
+    <section>
+        <label>Rows: <input type='text' name='rows' /></label>
+        <label>Columns: <input type='text' name='cols' /></label>
+        <label>Puzzle #<input type='text' name='seed' /></label>
+    </section>
+    <section class="no-print">
+        <button class='resize btn'>Generate/Reset</button>
+        <button class='next btn'>Next</button>
+        <button class='random btn'>Random</button>
+    </section>
+    <section class="no-print">
+        <label><input type=checkbox name='show-hint' /> Show Hints</label>
+        <label><input type=checkbox name='show-solution' /> Show Matches</label>
+    </section>
+    <section class="no-print">
+        <h2>Problems to find</h2>
+        <ol class="problems"></ol>
+    </section>
+    <section class="no-print">
+        <div class="social-icon-list">
+            <a href="https://twitter.com/@_ddrscott_"><img
+                    src="../public/images/glyphicons_social_31_twitter.png" /></a>
+            <a href="https://github.com/ddrscott/math-finder"><img
+                    src="../public/images/glyphicons_social_21_github.png" /></a>
+        </div>
+    </section>
+    <!-- hack so no input get default focus http://stackoverflow.com/a/20735034/613772 -->
+    <input type="text" autofocus="true" style="display:none" />
+    <script async type="module" src="./play.js"></script>
+</body>
+
+</html>
