@@ -14,7 +14,7 @@
     <meta property="og:image" content="https://ddrscott.github.io/math-finder/images/screen.png" />
 
     <!-- Use title if it's in the page YAML frontmatter -->
-    <title>Math Finder</title>
+    <title>Math Finder | Play </title>
 
     <link rel="stylesheet" href="./index.css">
     <link rel="stylesheet" href="./styles/game.css">
@@ -29,16 +29,18 @@
 </head>
 
 <body class="bg-base-300">
-    <div class="navbar navbar-xs bg-neutral text-neutral-content fixed top-0 z-30 min-h-1">
-        <a class="btn btn-xs btn-ghost" href="/">&laquo; Math Finder</a>
+    <div class="navbar navbar-xs bg-secondary text-secondary-content fixed top-0 z-30">
+        <a class="btn btn-ghost" href="/">
+            &laquo; Home
+        </a>
     </div>
-    <div class="game bg-base-100 px-[5%] pt-[4em]">
+    <div class="game bg-base-100 px-[5%] py-[5em] shadow-lg">
+        <img src='./images/example.png' alt="Example: 4 + 3 = 7" class="h-8 mx-auto" />
         <div class="no-print">Use mouse or finger to mark the findings <b>or</b> print for your kids and get away from
-            the
-            computer. Share with your friends.
+            the computer. Share with your friends.
         </div>
         <div class="py-4">
-            <span class='problem-count'>?</span> addition problems. Can you find them all? <span
+            <span class='problem-count'>?</span> number bonds. Can you find them all? <span
             class="remaining-num"></span><span class="remaining-label"></span>
         </div>
         <section class='puzzle-container'>
@@ -64,42 +66,33 @@
                 <input class='input input-sm input-bordered w-full input-sm text-center' type='text' name='seed' />
             </label>
         </section>
-        <section class="no-print">
-            <button class='resize btn btn-sm btn-secondary'>Generate/Reset</button>
-            <button class='next btn btn-sm btn-secondary'>Next</button>
-            <button class='random btn btn-sm btn-secondary'>Random</button>
+        <section class="no-print flex gap-4 justify-center">
+            <button class='resize btn btn-secondary'>Reset</button>
+            <button class='random btn btn-secondary'>Random</button>
+            <button class='next btn btn-secondary'>Next</button>
         </section>
-        <section class="no-print">
-            <div class="form-control max-w-[10em] mx-auto">
+        <section class="no-print max-w-[10em] mx-auto">
+            <div class="form-control">
                 <label class="label cursor-pointer">
                     <span class="label-text label-sm">Show Hints</span>
-                    <input type="checkbox" class="checkbox" name='show-hint' />
+                    <input type="checkbox" class="checkbox checkbox-sm" name='show-hint' />
                 </label>
             </div>
-
-            <div class="form-control max-w-[10em] mx-auto">
+            <div class="form-control">
                 <label class="label cursor-pointer">
                     <span class="label-text label-sm">Show Matches</span>
-                    <input type="checkbox" class="checkbox" name='show-solution' />
+                    <input type="checkbox" class="checkbox checkbox-sm" name='show-solution' />
                 </label>
             </div>
         </section>
         <section class="no-print">
-            <h2 class="text-xl m">Problems to find</h2>
+            <h2 class="text-xl pb-8">Problems to find</h2>
             <ol class="problems"></ol>
-        </section>
-        <section class="no-print">
-            <div class="social-icon-list">
-                <a href="https://twitter.com/@_ddrscott_"><img src="./images/glyphicons_social_31_twitter.png" /></a>
-                <a href="https://github.com/ddrscott/math-finder"><img
-                        src="./images/glyphicons_social_21_github.png" /></a>
-            </div>
         </section>
         <!-- hack so no input get default focus http://stackoverflow.com/a/20735034/613772 -->
         <input type="text" autofocus="true" style="display:none" />
         <script async type="module" src="./play.js"></script>
     </div>
-    <a class="btn btn-sm btn-outline z-index-1 fixed t-4 l-4" href="/">&laquo; Home</a>
 </body>
 
 </html>
