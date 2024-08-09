@@ -1,0 +1,147 @@
+section + section {
+  margin-top: 1em;
+}
+
+.table-board {
+  border-collapse: collapse;
+  border: none;
+  border-radius: 25px;
+}
+
+body {
+  min-height: 100vh;
+}
+
+.game {
+  text-align: center;
+  min-height: 100vh;
+  margin: 0 auto;
+}
+
+.match, .answer, .remaining-num {
+  color: #6464ff;
+  font-family: monospace;
+  font-weight: bold;
+  transition: none;
+}
+
+.puzzle-container {
+  flex-direction: column;
+  align-items: center;
+  display: flex;
+}
+
+.puzzle {
+  -webkit-user-select: none;
+  user-select: none;
+  -o-user-select: none;
+  border: .2em solid #000;
+  border-radius: 5px;
+  position: relative;
+}
+
+.solutions {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+
+.td--cell {
+  border: 1px solid #96969680;
+  margin: 0;
+  padding: 0;
+}
+
+.cell {
+  background-color: #fff;
+  justify-content: center;
+  align-items: center;
+  width: 2.75em;
+  height: 2.75em;
+  font-family: monospace;
+  font-size: 1.1em;
+  display: flex;
+}
+
+.oval {
+  border: .2em solid #6464ff80;
+  border-radius: 9em;
+  transition: border;
+  position: relative;
+}
+
+.oval.selection {
+  border-color: #3232c8;
+}
+
+.oval.invalid {
+  border-color: #c83232;
+}
+
+.oval.found {
+  border-color: #32c832;
+}
+
+.problem-count, .remaining-num {
+  font-family: monospace;
+  font-size: 1.5em;
+  font-weight: bold;
+}
+
+.problems {
+  columns: 9em;
+  width: 100%;
+}
+
+.problem {
+  text-align: center;
+  font-family: monospace;
+}
+
+ol.problems {
+  padding: 0;
+  list-style: none;
+}
+
+ol.problems li {
+  margin: 0 auto;
+}
+
+.social-icon-list {
+  margin-top: 10%;
+}
+
+.social-icon-list a:hover {
+  opacity: .6;
+}
+
+.social-icon-list a {
+  opacity: .3;
+  display: inline-block;
+}
+
+@media print {
+  .no-print, .google-auto-placed {
+    display: none;
+  }
+}
+
+#debug {
+  text-align: left;
+  word-break: breakall;
+  white-space: wrap;
+  background: #f0f0f0e6;
+  height: 12em;
+  padding: .5em;
+  font-family: monospace;
+  font-size: .8em;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+}
+
+*, :before, :after {
+  box-sizing: border-box;
+}
+/*# sourceMappingURL=play.7d022bd8.css.map */

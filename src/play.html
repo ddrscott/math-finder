@@ -1,0 +1,105 @@
+<!doctype html>
+<html>
+
+    <head>
+        <meta content="IE=edge" http-equiv="X-UA-Compatible">
+        <meta charset="utf-8">
+        <meta content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"
+              name="viewport">
+        <meta name="msapplication-tap-highlight" content="no" />
+        <meta property="og:url" content="https://ddrscott.github.io/math-finder/" />
+        <meta property="og:type" content="article" />
+        <meta property="og:title" content="Math Finder" />
+        <meta property="og:description" content="Make your kids smarter than mine" />
+        <meta property="og:image" content="https://ddrscott.github.io/math-finder/images/screen.png" />
+
+        <!-- Use title if it's in the page YAML frontmatter -->
+        <title>Math Finder | Play </title>
+
+        <link rel="stylesheet" href="./index.css">
+        <link rel="stylesheet" href="./styles/game.css">
+
+        <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+        <script>
+            (adsbygoogle = window.adsbygoogle || []).push({
+                google_ad_client: "ca-pub-8547687546592989",
+                enable_page_level_ads: true
+            });
+        </script>
+    </head>
+
+    <body class="">
+        <a class="no-print btn btn-ghost btn-sm btn-circle glass fixed top-0 z-30 m-2 w-16" href="/">
+            &laquo; Home
+        </a>
+        <div class="game container px-[5%] py-[4em] shadow">
+            <img src='./images/example.png' alt="Example: 4 + 3 = 7" class="h-8 mx-auto" />
+            <div class="no-print">Use mouse or finger to mark the findings <b>or</b> print for your kids and get away from
+                the computer. Share with your friends.
+            </div>
+            <div class="pt-4">
+                <span class='problem-count'>?</span> number bonds. Can you find them all?<div><span
+                      class="remaining-num"></span><span class="remaining-label"></span></div>
+            </div>
+            <section class='puzzle-container my-4'>
+                <div class="puzzle">Loading...</div>
+            </section>
+            <section class="hidden">
+                <label class="form-control w-full max-w-xs">
+                    <div class="label">
+                        <span class="label-text">Rows</span>
+                    </div>
+                    <input class='input input-sm input-bordered w-full input-sm text-center' type='text' name='rows' />
+                </label>
+                <label class="form-control w-full max-w-xs">
+                    <div class="label">
+                        <span class="label-text">Columns</span>
+                    </div>
+                    <input class='input input-sm input-bordered w-full input-sm text-center' type='text' name='cols' />
+                </label>
+                <label class="form-control w-full max-w-xs">
+                    <div class="label">
+                        <span class="label-text">Puzzle #</span>
+                    </div>
+                    <input class='input input-sm input-bordered w-full input-sm text-center' type='text' name='seed' />
+                </label>
+            </section>
+            <section class="no-print flex gap-4 justify-center">
+                <button class='resize btn btn-secondary'>Reset</button>
+                <button class='random btn btn-secondary'>Random</button>
+                <button class='next btn btn-secondary'>Next</button>
+            </section>
+            <section class="no-print max-w-[10em] mx-auto">
+                <div class="form-control">
+                    <label class="label cursor-pointer">
+                        <span class="label-text label-sm">Show Hints</span>
+                        <input type="checkbox" class="checkbox checkbox-sm" name='show-hint' />
+                    </label>
+                </div>
+                <div class="form-control">
+                    <label class="label cursor-pointer">
+                        <span class="label-text label-sm">Show Matches</span>
+                        <input type="checkbox" class="checkbox checkbox-sm" name='show-solution' />
+                    </label>
+                </div>
+            </section>
+            <section class="no-print">
+                <h2 class="text-xl pb-8">Problems to find</h2>
+                <ol class="problems"></ol>
+            </section>
+            <!-- hack so no input get default focus http://stackoverflow.com/a/20735034/613772 -->
+            <input type="text" autofocus="true" style="display:none" />
+            <script async type="module" src="./play.js"></script>
+
+        </div>
+        <div class="no-print hero container bg-secondary text-secondary-content py-[15%] mx-auto">
+            <p class="text-center">
+                Made with ❤️  by <a class="link mx-0" href="https://ddrscott.github.io/">Scott</a>
+                <br />
+                <br />
+                For the traditional printable worksheets try <a class="link" href="https://mathing.vercel.app" target="_blank">Mathing</a>.
+            </p>
+        </div>
+    </body>
+
+</html>

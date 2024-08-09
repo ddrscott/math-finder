@@ -1,6 +1,6 @@
+import { useEffect, useRef } from 'react';
 import jQuery from 'jquery';
 import Hammer from './vendor/hammer';
-import * as hammertime from './vendor/hammer-timejs.min';
 import Trig from './trig';
 import Puzzle from './puzzle';
 //= require app
@@ -205,7 +205,7 @@ const AppFactory = () => {
 
   render(puzzle) {
     const $puzzle = jQuery('.puzzle'),
-      $table = jQuery('<table />');
+      $table = jQuery('<table class="table-board" />');
 
     puzzle.forEach(row => {
       var tr = jQuery('<tr/>');
@@ -235,7 +235,7 @@ jQuery(document).ready(() => {
         // auto generate everything
         App.init({
             rows: Math.min(15, parseInt(jQuery(window).height() * 0.8 / 16 / 2.75)),
-            cols: Math.min(15, parseInt(jQuery(window).width() * 0.9 / 16 / 2.75)),
+            cols: Math.min(15, parseInt(jQuery(window).width() * 0.8 / 16 / 2.75)),
             max: 15,
             seed: parseInt(Math.random() * 999)
         });
