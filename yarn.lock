@@ -2297,7 +2297,12 @@ queue-microtask@^1.2.2:
   resolved "https://registry.npmjs.org/queue-microtask/-/queue-microtask-1.2.3.tgz"
   integrity sha512-NuaNSa6flKT5JaSYQzJok04JzTL1CA6aGhv5rfLW3PgqA+M2ChpZQnAC8h8i4ZFkBS8X5RqkDBHA7r4hej3K9A==
 
-react-dom@^18.3.1, react-dom@>=16.8:
+react-daisyui@^5.0.3:
+  version "5.0.3"
+  resolved "https://registry.npmjs.org/react-daisyui/-/react-daisyui-5.0.3.tgz"
+  integrity sha512-zTlWwqp08dlvdk7fHnYbkZETYqcd2yZhMteAN9nTSHmOzy/XgiIGqmjuw/Yi6qfMk87/IYexr/J5QceHECrXdg==
+
+react-dom@^18.3.1, react-dom@>=16, react-dom@>=16.8:
   version "18.3.1"
   resolved "https://registry.npmjs.org/react-dom/-/react-dom-18.3.1.tgz"
   integrity sha512-5m4nQKp+rZRb09LNH59GM4BxTh9251/ylbKIbpe7TpGxfJ+9kv6BLkLBXIjjspbgbnIBNqlI23tRnTWT0snUIw==
@@ -2330,7 +2335,7 @@ react-router@6.26.0:
   dependencies:
     "@remix-run/router" "1.19.0"
 
-react@^18.3.1, react@>=16.8:
+react@^18.3.1, react@>=16, react@>=16.8:
   version "18.3.1"
   resolved "https://registry.npmjs.org/react/-/react-18.3.1.tgz"
   integrity sha512-wS+hAgJShR0KhEvPJArfuPVN1+Hz1t0Y6n5jLrGQbkb4urgPE/0Rve+1kMB1v/oWgHgm4WIcV+i7F2pTVj+2iQ==
@@ -2559,7 +2564,7 @@ svgo@^3.0.2:
     csso "^5.0.5"
     picocolors "^1.0.0"
 
-tailwindcss@^3.4.9:
+tailwindcss@^3.4.9, tailwindcss@>=3.2.7:
   version "3.4.9"
   resolved "https://registry.npmjs.org/tailwindcss/-/tailwindcss-3.4.9.tgz"
   integrity sha512-1SEOvRr6sSdV5IDf9iC+NU4dhwdqzF4zKKq3sAbasUWHEM6lsMhX+eNN5gkPx1BvLFEnZQEUFbXnGj8Qlp83Pg==

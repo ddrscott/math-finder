@@ -17,8 +17,7 @@
     <title>Math Finder</title>
 
     <link rel="stylesheet" href="./index.css">
-    <link rel="stylesheet" href="../public/styles/_normalize.css">
-    <link rel="stylesheet" href="../public/styles/style.css">
+    <link rel="stylesheet" href="./styles/game.css">
 
     <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
     <script>
@@ -29,45 +28,78 @@
     </script>
 </head>
 
-<body class="<%= page_classes %>">
-    <h1>Math Finder <img src='../public/images/example.png' width=88 height=38 class='no-print' alt='example' /> </h1>
-    <div class="no-print">Use mouse or finger to mark the findings <b>or</b> print for your kids and get away from the
-        computer.</div>
-    Share with your friends.
-    <span class='problem-count'>?</span> addition problems. Can you find them all? <span
-        class="remaining-num"></span><span class="remaining-label"></span>
-    <section class='puzzle-container'>
-        <div class="puzzle">Loading...</div>
-    </section>
-    <section>
-        <label>Rows: <input type='text' name='rows' /></label>
-        <label>Columns: <input type='text' name='cols' /></label>
-        <label>Puzzle #<input type='text' name='seed' /></label>
-    </section>
-    <section class="no-print">
-        <button class='resize btn'>Generate/Reset</button>
-        <button class='next btn'>Next</button>
-        <button class='random btn'>Random</button>
-    </section>
-    <section class="no-print">
-        <label><input type=checkbox name='show-hint' /> Show Hints</label>
-        <label><input type=checkbox name='show-solution' /> Show Matches</label>
-    </section>
-    <section class="no-print">
-        <h2>Problems to find</h2>
-        <ol class="problems"></ol>
-    </section>
-    <section class="no-print">
-        <div class="social-icon-list">
-            <a href="https://twitter.com/@_ddrscott_"><img
-                    src="../public/images/glyphicons_social_31_twitter.png" /></a>
-            <a href="https://github.com/ddrscott/math-finder"><img
-                    src="../public/images/glyphicons_social_21_github.png" /></a>
+<body class="bg-base-300">
+    <div class="navbar navbar-xs bg-neutral text-neutral-content fixed top-0 z-30 min-h-1">
+        <a class="btn btn-xs btn-ghost" href="/">&laquo; Math Finder</a>
+    </div>
+    <div class="game bg-base-100 px-[5%] pt-[4em]">
+        <div class="no-print">Use mouse or finger to mark the findings <b>or</b> print for your kids and get away from
+            the
+            computer. Share with your friends.
         </div>
-    </section>
-    <!-- hack so no input get default focus http://stackoverflow.com/a/20735034/613772 -->
-    <input type="text" autofocus="true" style="display:none" />
-    <script async type="module" src="./play.js"></script>
+        <div class="py-4">
+            <span class='problem-count'>?</span> addition problems. Can you find them all? <span
+            class="remaining-num"></span><span class="remaining-label"></span>
+        </div>
+        <section class='puzzle-container'>
+            <div class="puzzle">Loading...</div>
+        </section>
+        <section class="hidden">
+            <label class="form-control w-full max-w-xs">
+                <div class="label">
+                    <span class="label-text">Rows</span>
+                </div>
+                <input class='input input-sm input-bordered w-full input-sm text-center' type='text' name='rows' />
+            </label>
+            <label class="form-control w-full max-w-xs">
+                <div class="label">
+                    <span class="label-text">Columns</span>
+                </div>
+                <input class='input input-sm input-bordered w-full input-sm text-center' type='text' name='cols' />
+            </label>
+            <label class="form-control w-full max-w-xs">
+                <div class="label">
+                    <span class="label-text">Puzzle #</span>
+                </div>
+                <input class='input input-sm input-bordered w-full input-sm text-center' type='text' name='seed' />
+            </label>
+        </section>
+        <section class="no-print">
+            <button class='resize btn btn-sm btn-secondary'>Generate/Reset</button>
+            <button class='next btn btn-sm btn-secondary'>Next</button>
+            <button class='random btn btn-sm btn-secondary'>Random</button>
+        </section>
+        <section class="no-print">
+            <div class="form-control max-w-[10em] mx-auto">
+                <label class="label cursor-pointer">
+                    <span class="label-text label-sm">Show Hints</span>
+                    <input type="checkbox" class="checkbox" name='show-hint' />
+                </label>
+            </div>
+
+            <div class="form-control max-w-[10em] mx-auto">
+                <label class="label cursor-pointer">
+                    <span class="label-text label-sm">Show Matches</span>
+                    <input type="checkbox" class="checkbox" name='show-solution' />
+                </label>
+            </div>
+        </section>
+        <section class="no-print">
+            <h2 class="text-xl m">Problems to find</h2>
+            <ol class="problems"></ol>
+        </section>
+        <section class="no-print">
+            <div class="social-icon-list">
+                <a href="https://twitter.com/@_ddrscott_"><img src="./images/glyphicons_social_31_twitter.png" /></a>
+                <a href="https://github.com/ddrscott/math-finder"><img
+                        src="./images/glyphicons_social_21_github.png" /></a>
+            </div>
+        </section>
+        <!-- hack so no input get default focus http://stackoverflow.com/a/20735034/613772 -->
+        <input type="text" autofocus="true" style="display:none" />
+        <script async type="module" src="./play.js"></script>
+    </div>
+    <a class="btn btn-sm btn-outline z-index-1 fixed t-4 l-4" href="/">&laquo; Home</a>
 </body>
 
 </html>

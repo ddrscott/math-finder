@@ -205,7 +205,7 @@ const AppFactory = () => {
 
   render(puzzle) {
     const $puzzle = jQuery('.puzzle'),
-      $table = jQuery('<table />');
+      $table = jQuery('<table class="table-board" />');
 
     puzzle.forEach(row => {
       var tr = jQuery('<tr/>');

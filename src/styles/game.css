@@ -1,42 +1,25 @@
-body {
-  margin: 0 auto;
-  text-align: center;
-  padding: 5%;
-  width: 100%;
-  max-width: 768px;
-}
-
-section {
-  clear: both;
-}
-
 section + section {
   margin-top: 1em;
 }
 
-label {
-  white-space: nowrap;
-  margin: 0 .5em;
-}
-
-input {
-  max-width: 2em;
-  text-align: center;
-}
-
-h1,
-h1 img {
-  vertical-align: bottom;
-}
-
-h2 {
-  margin-bottom: 0;
-}
-
-table {
+.table-board {
   border-collapse: collapse;
-  border: 2px solid black;
+  border: none;
+  border-radius: 25px;
 }
+
+body {
+  min-height: 100vh;
+}
+
+.game {
+  margin: 0 auto;
+  text-align: center;
+  width: 100%;
+  max-width: 768px;
+  min-height: 100vh;
+}
+
 
 .match,
 .answer,
@@ -58,6 +41,8 @@ table {
   /*disable selection for now*/
   -moz-user-select: none; -webkit-user-select: none; -ms-user-select:none; user-select:none;-o-user-select:none;
   position: relative;
+  border: .2em solid black;
+  border-radius: 5px;
 }
 
 .solutions {
@@ -67,7 +52,7 @@ table {
 }
 
 .td--cell {
-  border: 1px solid #ccc;
+  border: 1px solid rgba(150,150,150,.5);
   margin: 0;
   padding: 0;
 }
@@ -77,6 +62,7 @@ table {
   font-family: monospace;
   width: 2.75em;
   height: 2.75em;
+  background-color: white;
 
   display: flex;
   align-items: center;
@@ -85,7 +71,7 @@ table {
 
 .oval {
   position: relative;
-  border: .15em solid rgba(100,100,255,.5);
+  border: .2em solid rgba(100,100,255,.5);
   border-radius: 9em;
   transition: border;
 }
@@ -112,16 +98,12 @@ table {
 
 .problems {
   width: 100%;
-  -moz-column-width: 9em;
-  -moz-columns: 9em;
-  -webkit-columns: 9em;
   columns: 9em;
 }
 
 .problem {
   font-family: monospace;
   text-align: center;
-  color: black;
 }
 
 ol.problems {
@@ -143,6 +125,7 @@ ol.problems li {
 
 .social-icon-list a {
   opacity: 0.3;
+  display: inline-block;
 }
 
 
