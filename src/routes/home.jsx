@@ -1,47 +1,38 @@
 import demo from '../images/demo-loop.gif'
 import example from '../images/example.png'
 
-export default function Root(...args) {
+export default function Root() {
     return (
-        <>
+        <div className="container mx-auto shadow">
             <div className="hero bg-base-100 min-h-[80vh]">
-                <div className="hero-content text-center flex-col md:flex-row">
-                    <p>
-                        <h1 className="text-4xl font-bold pb-8">Math Finder</h1>
-                        "Bond" with your kids by finding math problems together.
-                        They get smarter, you get closer.
-                    </p>
+                <div className="hero-content text-center flex-col px-8">
+                    <h1 className="text-4xl font-bold">Math Finder</h1>
+                    <p className="text-lg">Learn math with your kids, together.</p>
 
-                    <p>
-                        <img src={demo} alt="demo" className="w-full" />
-                        <a className="btn btn-secondary m-8" href="play" >Free Play</a>
-                    </p>
+                    <img src={demo} alt="demo" className="w-full" />
+
+                    <a className="btn btn-secondary m-8" href="play" >Start Playing</a>
                 </div>
             </div>
             <div className="hero bg-secondary text-secondary-content py-[15%] shadow">
-                <div className="hero-content text-start">
-                    <p>
-                        <h2 className="text-2xl font-bold my-8">What is a number bond?</h2>
-                        A number bond are 2 numbers that add up to another number. For example, 3 and 2 are a number bond for 5.
-                        They also work in the other direction for instance, 5 minus 3 is 2.
-                        <br/><br/>
-                        Number bonds are essential for fluency in math. This app helps kids learn number bonds in a fun and interactive way.
-                        <br />
-                    </p>
-                    <p>
-                        <img src={example} alt="example 4 + 3 = 7" className="w-full" />
-                        <a className="btn btn-secondary-content m-8" href="play" >Let's Play!</a>
-                    </p>
+                <div className="hero-content text-start flex-col px-8">
+                    <h2 className="text-3xl font-bold my-8">What is Math Finder?</h2>
+
+                    <p>Math Finder is an interactive and printable math app designed to help kids practice the essential math concept of number bonds. With our engaging game, you can bond with your child over math and watch them grow in confidence and fluency.</p>
                 </div>
             </div>
             <div className="hero bg-base-100 text-base-100-content py-[15%] shadow">
-                <p className="text-center">
-                    Made with ❤️  by <a className="link mx-0" href="https://ddrscott.github.io/">Scott</a>
-                    <br />
-                    <br />
-                    For the traditional printable worksheets try <a className="link" href="https://mathing.vercel.app" target="_blank">Mathing</a>.
-                </p>
+                <div className="hero-content text-center flex-col px-8">
+                    <h2 className="text-3xl font-bold my-8">How Does Math Finder Work?</h2>
+
+                    <p>Math Finder uses interactive exercises to help kids learn number bonds with addition and subtraction. Our app provides a fun and engaging way for kids to practice math concepts in a safe and supportive environment.</p>
+
+                    <img src={example} alt="example 4 + 3 = 7" />
+                </div>
             </div>
-        </>
+            <div className="hero bg-secondary text-secondary-content py-[15%] shadow">
+                <p className="text-center px-8">Made with ❤️ by <a href="https://ddrscott.github.com/" className="link" target="_blank">Scott</a></p>
+            </div>
+        </div>
     );
 }
