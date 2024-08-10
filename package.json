@@ -5,8 +5,19 @@
     "repository": "https://github.com/ddrscott/math-finder",
     "author": "Scott Pierce <ddrscott@gmail.com>",
     "license": "MIT",
+    "targets": {
+        "root": {
+            "source": "src/index.html",
+            "distDir": "dist/"
+        },
+        "play": {
+            "source": "src/play.html",
+            "distDir": "dist/play"
+        }
+    },
     "scripts": {
-        "serve": "parcel src/*.html"
+        "serve": "parcel serve",
+        "build": "parcel build"
     },
     "devDependencies": {
         "daisyui": "^4.12.10",
