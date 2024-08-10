@@ -2,7 +2,6 @@
     "name": "math-finder",
     "version": "0.0.1",
     "description": "Find the bonds for fun and fun",
-    "main": "index.js",
     "repository": "https://github.com/ddrscott/math-finder",
     "author": "Scott Pierce <ddrscott@gmail.com>",
     "license": "MIT",
