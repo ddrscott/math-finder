@@ -11925,7 +11925,7 @@ var _random = require("./random");
 var _randomDefault = parcelHelpers.interopDefault(_random);
 var _cell = require("./cell");
 var _cellDefault = parcelHelpers.interopDefault(_cell);
-exports.default = Puzzle = function(options) {
+const Puzzle = function(options) {
     this.numRows = parseInt(options.rows || 3);
     this.numCols = parseInt(options.cols || 3);
     this.minNum = parseInt(options.min || 1);
@@ -12046,11 +12046,15 @@ exports.default = Puzzle = function(options) {
         this.rows.forEach(callback);
     };
 };
+_c = Puzzle;
+exports.default = Puzzle;
+var _c;
+$RefreshReg$(_c, "Puzzle");
 
 },{"./random":"1fE0k","./cell":"9qt3I","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"1fE0k":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
-exports.default = Random = {
+const Random = {
     seed: 0,
     int (min, max) {
         this.seed = (this.seed * 9301 + 49297) % 233280;
@@ -12058,13 +12062,14 @@ exports.default = Random = {
         return parseInt(min + rnd * (max - min + 1));
     }
 };
+exports.default = Random;
 
 },{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"9qt3I":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 var _random = require("./random");
 var _randomDefault = parcelHelpers.interopDefault(_random);
-exports.default = Cell = function(row, col, min, max) {
+const Cell = function(row, col, min, max) {
     var self = this;
     this.row = row;
     this.col = col;
@@ -12075,9 +12080,13 @@ exports.default = Cell = function(row, col, min, max) {
         return "cell-" + self.row + "-" + self.col;
     };
 };
+_c = Cell;
 Cell.prototype.toString = function() {
     return this.num.toString();
 };
+exports.default = Cell;
+var _c;
+$RefreshReg$(_c, "Cell");
 
 },{"./random":"1fE0k","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}]},["EFYb1","1xC6H","fR3q0"], "fR3q0", "parcelRequiref395")
 

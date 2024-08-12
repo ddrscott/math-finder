@@ -1,7 +1,7 @@
 import Random from './random';
 import Cell from './cell';
 
-export default Puzzle = function(options) {
+const Puzzle = function(options) {
   this.numRows = parseInt(options.rows || 3);
   this.numCols = parseInt(options.cols || 3);
   this.minNum  = parseInt(options.min  || 1);
@@ -117,3 +117,5 @@ export default Puzzle = function(options) {
     this.rows.forEach(callback);
   };
 };
+
+export default Puzzle;

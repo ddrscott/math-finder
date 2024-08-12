@@ -1,6 +1,6 @@
 import Random from './random';
 
-export default Cell = function(row, col, min, max) {
+const Cell = function(row, col, min, max) {
   var self = this;
 
   this.row = row;
@@ -16,3 +16,5 @@ export default Cell = function(row, col, min, max) {
 Cell.prototype.toString = function() {
   return this.num.toString();
 }
+
+export default Cell;

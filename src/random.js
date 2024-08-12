@@ -1,4 +1,4 @@
-export default Random = {
+const Random = {
   seed: 0,
 
   int(min, max) {
@@ -7,3 +7,4 @@ export default Random = {
     return parseInt(min + rnd * (max - min + 1));
   }
 }
+export default Random;
