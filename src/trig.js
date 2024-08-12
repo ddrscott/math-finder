@@ -1,6 +1,6 @@
 import jQuery from 'jquery';
 
-export default Trig = {
+const Trig = {
   center(e) {
     var offset = e.offset();
     return {
@@ -60,3 +60,5 @@ export default Trig = {
     this.rotate(oval, deg);
   }
 }
+
+export default Trig;

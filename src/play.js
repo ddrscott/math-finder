@@ -1,4 +1,3 @@
-import { useEffect, useRef } from 'react';
 import jQuery from 'jquery';
 import Hammer from './vendor/hammer';
 import Trig from './trig';
