@@ -12,7 +12,7 @@ export default function Root() {
 
                     <img src={demo} alt="demo" className="w-full" />
 
-                    <a className="btn btn-secondary m-8" href="play" >Start Searching</a>
+                    <a className="btn btn-secondary m-8" href="play.html" >Start Searching</a>
                 </div>
             </div>
             <div className="hero bg-secondary text-secondary-content py-[15%] shadow">
