@@ -1411,6 +1411,10 @@ html {
   display: none;
 }
 
+.h-4 {
+  height: 1rem;
+}
+
 .h-8 {
   height: 2rem;
 }
@@ -1421,6 +1425,10 @@ html {
 
 .min-h-\[80vh\] {
   min-height: 80vh;
+}
+
+.min-h-\[75\%\] {
+  min-height: 75%;
 }
 
 .min-h-\[75vh\] {
