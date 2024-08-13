@@ -2,6 +2,7 @@ import jQuery from 'jquery';
 import Hammer from './vendor/hammer';
 import Trig from './trig';
 import Puzzle from './puzzle';
+import JSConfetti from 'js-confetti'
 //= require app
 
 const AppFactory = () => {
@@ -19,6 +20,8 @@ const AppFactory = () => {
 
   init(opts) {
     var self = this;
+
+    this.jsConfetti = new JSConfetti();
 
     // bind events
     this.btnResize.on('click', this.handleGenerate.bind(this));
@@ -92,6 +95,8 @@ const AppFactory = () => {
       prob.solved = true;
       jQuery('.selection').addClass('found').removeClass('selection');
       this.renderRemaining();
+
+      this.jsConfetti.addConfetti()
     });
     if (!valid) {
       jQuery('.selection').addClass('invalid')
@@ -239,4 +244,5 @@ jQuery(document).ready(() => {
             seed: parseInt(Math.random() * 999)
         });
     }
+
 });
