@@ -1415,8 +1415,16 @@ html {
   height: 2rem;
 }
 
+.h-\[1em\] {
+  height: 1em;
+}
+
 .min-h-\[80vh\] {
   min-height: 80vh;
+}
+
+.min-h-\[75vh\] {
+  min-height: 75vh;
 }
 
 .w-16 {
@@ -1537,5 +1545,9 @@ html {
 
 .filter {
   filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
+}
+
+.gradient {
+  background-image: linear-gradient(35deg, #fff 0%, #ebebff 21%, #d1d4ff 36%, #b8bfff 49%, #9eabff 60%, #8097ff 70%, #5c85ff 83%, #1472ff 100%);
 }
 /*# sourceMappingURL=index.61d3354a.css.map */
